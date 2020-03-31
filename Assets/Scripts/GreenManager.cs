@@ -7,8 +7,10 @@ public class GreenManager : MonoBehaviour
 
 	
 	public float YPosDown = 0.75f;
-	public float YPosUp = 1.75f;
-	public GameObject cylinder;
+    public float YPosUp = 1.75f;
+	public float YPosTop = 1.75f;
+    public GameObject cylinder;
+	public GameObject cylinderP;
 	public GameObject cam;
 	public float offset = 5.0f;
 	public float offsetSeed = 2.0f;
@@ -46,15 +48,48 @@ public class GreenManager : MonoBehaviour
 
     void add()
     {
-    	GameObject tile;
-	    tile = Instantiate(cylinder) as GameObject; 
-	    tile.transform.SetParent(transform);  	
+	    
 
-	    //float yPos = Mathf.Floor(Random.value * 3.0f) - 1;
+        bool up = Random.value < 0.50f;
+        bool top = Random.value < 0.50f;   
+        bool down = Random.value < 0.50f;
 
-	    tile.transform.position = (new Vector3(Mathf.Floor(lastAdded), YPosDown, 0));
-	    spawned.Add(tile);
+        if(!down && !up)
+            down = true;
+
+        if(down)
+        {
+            GameObject tile = Instantiate(cylinder) as GameObject; 
+            tile.transform.SetParent(transform);    
+            tile.transform.position = (new Vector3(Mathf.Floor(lastAdded), YPosDown, 0));
+            spawned.Add(tile);
+        } 
+
+        if(up)
+        {
+            GameObject tile2 = Instantiate(cylinderP) as GameObject; 
+            tile2.transform.SetParent(transform);    
+            tile2.transform.position = (new Vector3(Mathf.Floor(lastAdded), YPosUp, 0));
+            spawned.Add(tile2);
+        }
+
+        if(top)
+        {
+            GameObject tile3 = Instantiate(cylinder) as GameObject; 
+            tile3.transform.SetParent(transform);    
+            tile3.transform.position = (new Vector3(Mathf.Floor(lastAdded), YPosTop, 0));
+            spawned.Add(tile3);
+        }
+
     	lastAdded += thisOffset;
     	thisOffset = offset + Random.Range(-offsetSeed, offsetSeed);
     }
+
+    public void respawn()
+    {
+        for(int i=0;i<spawned.Count;i++)
+            Destroy(spawned[i]);
+        spawned.Clear();
+    }
+
 }

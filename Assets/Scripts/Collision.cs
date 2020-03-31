@@ -34,7 +34,7 @@ public class Collision : MonoBehaviour
         else
         if(gOther.tag == "B")
         {
-            blinker.blink();
+            blinker.blinkCyan();
             Destroy(gOther);
             score.incrementHertz();
             //Debug.Log("UP");
@@ -43,6 +43,11 @@ public class Collision : MonoBehaviour
         if(gOther.tag == "CC")
         {
             cube.CollideGreen();
+        }
+        else
+        if(gOther.tag == "CP")
+        {
+            cube.CollideGreen(true);
         }
     }
 }

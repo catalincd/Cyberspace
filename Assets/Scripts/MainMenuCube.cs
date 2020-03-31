@@ -8,7 +8,7 @@ public class MainMenuCube : MonoBehaviour
 
     public Text coins;
     public Text hertz;
-	public GameObject camera;
+	public GameObject cam;
 	public GameObject cubeToInstatiate;
     public Texture[] cubeTextures;
     public Material cubeMaterial;
@@ -40,14 +40,14 @@ public class MainMenuCube : MonoBehaviour
         	addCube(i);
         }
 
-        yPos = camera.transform.position.y;
-        zPos = camera.transform.position.z;
+        yPos = cam.transform.position.y;
+        zPos = cam.transform.position.z;
 
         coins.text = "" + PlayerPrefs.GetInt("bytes", 0);
         hertz.text = "" + PlayerPrefs.GetInt("hertz", 0);
 
         selected = PlayerPrefs.GetInt("selected", 0);
-        camera.transform.position = new Vector3(selected * xOffset, yPos, zPos);
+        cam.transform.position = new Vector3(selected * xOffset, yPos, zPos);
         transitioning = false;
         buttonState();
     }
@@ -70,13 +70,13 @@ public class MainMenuCube : MonoBehaviour
         if(transitioning)
         {
         	camBias += Time.deltaTime / transitionSpeed;
-        	camera.transform.position = new Vector3(Mathf.SmoothStep(startCamPos, targetCamPos, camBias), yPos, zPos);
+        	cam.transform.position = new Vector3(Mathf.SmoothStep(startCamPos, targetCamPos, camBias), yPos, zPos);
 
         	if(camBias >= 1.0f)
         	{
         		transitioning = false;
         		camBias = 0.0f;
-        		camera.transform.position = new Vector3(targetCamPos, yPos, zPos);
+        		cam.transform.position = new Vector3(targetCamPos, yPos, zPos);
         	}
         }
     }
@@ -86,7 +86,7 @@ public class MainMenuCube : MonoBehaviour
     	selected--;
     	camBias = 0.0f;
     	transitioning = true;
-    	startCamPos = camera.transform.position.x;
+    	startCamPos = cam.transform.position.x;
     	targetCamPos = selected * xOffset;
     	buttonState();
     }
@@ -96,7 +96,7 @@ public class MainMenuCube : MonoBehaviour
     	selected++;
     	camBias = 0.0f;
     	transitioning = true;
-    	startCamPos = camera.transform.position.x;
+    	startCamPos = cam.transform.position.x;
     	targetCamPos = selected * xOffset;
     	buttonState();
     }

@@ -111,7 +111,7 @@ public class TileManager : MonoBehaviour
 
     void Update()
     {
-        if(lastAdded - cam.transform.position.x < stride)
+        while(lastAdded - cam.transform.position.x < stride)
         {
         	if(debug)
         		addFixed(idx);
@@ -185,6 +185,35 @@ public class TileManager : MonoBehaviour
     		spawned.RemoveAt(0);
     		spawnedX.RemoveAt(0);
     	}
+    }
+
+    public void respawn2()
+    {
+        for(int i=0;i<3;i++)
+        {
+            Vector3 pos = spawned[i].transform.position;
+            spawned[i] = Instantiate(tiles[0]) as GameObject;
+            spawned[i].transform.SetParent(transform);
+            spawned[i].transform.position = pos;
+        }
+    }
+
+    public void respawn()
+    {
+        lastAdded = spawned[0].transform.position.x - size;
+
+        for(int i=0;i<spawned.Count;i++)
+            Destroy(spawned[i]);
+        spawned.Clear();
+
+        for(int i=0;i<spawnedUps.Count;i++)
+            Destroy(spawnedUps[i]);
+        spawnedUps.Clear();
+        spawnedX.Clear();
+
+        addFixed();
+        addFixed();
+        addFixed();
     }
 
     void addVertical(int id, float x)

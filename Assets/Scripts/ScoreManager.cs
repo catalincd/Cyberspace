@@ -9,6 +9,7 @@ public class ScoreManager : MonoBehaviour
 	public Text display;
 
     int currentScore = 0;
+    int lastAdded = 0;
 	int currentHertz = 0;
 	int multiplier = 30;
     public bool stopped = true;
@@ -16,6 +17,7 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        lastAdded = 0;
         currentScore = 0;
         currentHertz = PlayerPrefs.GetInt("hertz", 0);
         if(!stopped)
@@ -41,8 +43,7 @@ public class ScoreManager : MonoBehaviour
     {
         if(!stopped)
         {
-            currentHertz++;
-            //display.text = "" + currentScore;
+            PlayerPrefs.SetInt("hertz", PlayerPrefs.GetInt("hertz", 0) + 1);
         }
     }
 
@@ -53,8 +54,9 @@ public class ScoreManager : MonoBehaviour
 
     public void addCoins()
     {
-        PlayerPrefs.SetInt("bytes", PlayerPrefs.GetInt("bytes", 0) + currentScore);
-        PlayerPrefs.SetInt("hertz", currentHertz);
+        PlayerPrefs.SetInt("bytes", PlayerPrefs.GetInt("bytes", 0) + currentScore - lastAdded);
+        lastAdded = currentScore;
+        //PlayerPrefs.SetInt("hertz", currentHertz);
     }
 
     

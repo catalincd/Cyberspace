@@ -11,10 +11,13 @@ public class OverlayManager : MonoBehaviour
 	public Color cyan;
 
 	float bias = 1.0f;
-	float animationDuration = 0.72f;
+	public float animationDuration = 0.72f;
 
-	bool up = false;
+    bool up = false;
+	bool up2 = false;
 	bool down = true;
+    bool down2 = false;
+    bool toRestart = false;
 
 	Color blackTransparent;
 	Color cyanTransparent;
@@ -31,6 +34,22 @@ public class OverlayManager : MonoBehaviour
         cyanTransparent.a = 0.0f;
     }
 
+    public void restart()
+    {
+        up = false;
+        down = false;
+        down2 = true;
+        up2 = false;
+    }
+
+    public void respStart()
+    {
+        up2 = true;
+         up = false;
+        down = false;
+        down2 = false;
+    }
+
     public void start()
     {
     	up = true;
@@ -40,7 +59,30 @@ public class OverlayManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {	
-        if(up)
+        if(up2)
+        {
+            img.color = Color.Lerp(blackTransparent, black, bias);
+            bias += Time.deltaTime / animationDuration;
+            if(bias >= 1.0f)
+            {
+                up2 = false;
+                bias = 0.0f;
+                img.color = black;
+                restart();
+            }
+        }
+        else if(down2)
+        {
+            img.color = Color.Lerp(black, blackTransparent, bias);
+            bias += Time.deltaTime / animationDuration;
+            if(bias >= 1.0f)
+            {
+                down2 = false;
+                bias = 0.0f;
+                img.color = blackTransparent;
+            }
+        }
+        else if(up)
         {
         	img.color = Color.Lerp(cyanTransparent, cyan, bias);
         	bias += Time.deltaTime / animationDuration;

@@ -8,7 +8,10 @@ public class Cube : MonoBehaviour
 {
 
 
-	
+	[Header("Bound Objects")]
+	public FadeIn respawnFade;
+	public Respawn respawn;
+	public GameObject respawnObject;
     public GameObject parentCube;
     public GameObject childCube;
     public Blinker blinker;
@@ -51,6 +54,7 @@ public class Cube : MonoBehaviour
     float movementFactor = 1.0f;
     bool stopped = false;
     bool gameOver = false;
+    bool respawned = false;
 
     Quaternion currentRot;
     Quaternion targetRot;
@@ -80,6 +84,7 @@ public class Cube : MonoBehaviour
     [Header("Camera")]
     public GameObject cam;
     public bool autoAdjustCam = true;
+    public bool verticalCam = true;
     public bool followCubeLateral = true;
     public float shakeAmplitude = 1.0f;
     public float shakeDuration = 0.7f;
@@ -101,6 +106,7 @@ public class Cube : MonoBehaviour
     bool animateImage = false;
     bool animateJump = true;
     float yieldLateral = 1.0f;
+    float yCamPos;
 
     void Start()
     {
@@ -123,6 +129,8 @@ public class Cube : MonoBehaviour
         {
             camOffset = cam.transform.position - transform.position;
         }  
+
+       // yCamPos = 
 
         initXPos = transform.position.x;
 
@@ -255,7 +263,8 @@ public class Cube : MonoBehaviour
 
 	        //set camera
 	        cam.transform.position = transform.position + camOffset;
-	        cam.transform.position = new Vector3(transform.position.x + camOffset.x, 1.2f, followCubeLateral? cam.transform.position.z : 0);
+	        float yPosOffset = Mathf.Max(0.0f, (transform.position.y + camOffset.y - 1.2f) * 0.65f);
+	        cam.transform.position = new Vector3(transform.position.x + camOffset.x, yPosOffset + 1.2f, followCubeLateral? cam.transform.position.z : 0);
 	    
 	        //jumpQueue
 	        if(jumpQueue && !jumping)
@@ -272,55 +281,96 @@ public class Cube : MonoBehaviour
 
         	if(endNow())
         	{
-                endGame();
-        		
+                endGame();	
         	}
         }
         else
         {
-        	cameraShakeBias += Time.deltaTime / shakeDuration;
-        	float currentAmplitude = shakeAmplitude * shakeCurve.Evaluate(cameraShakeBias);
-        	Vector3 offset = Random.insideUnitSphere * currentAmplitude;
+        	if(gameOver)
+        	{
+        		cameraShakeBias += Time.deltaTime / shakeDuration;
+        		float currentAmplitude = shakeAmplitude * shakeCurve.Evaluate(cameraShakeBias);
+        		Vector3 offset = Random.insideUnitSphere * currentAmplitude;
 
-        	refText.text = offset.ToString();
-        	cam.transform.position = finalCamPos + offset;
-
-        	//if(animateImage)
-        	//{
-        	//	imageBias += Time.deltaTime / 1.0f;
-        	//	imageBias = Mathf.Min(imageBias, 1.0f);
-///
-        	///	img.color = new Color(0.0f, 0.0f, 0.0f, imageBias);
-
-        	//}
-
+        		refText.text = offset.ToString();
+        		cam.transform.position = finalCamPos + offset;
+        	}
         }
-
-        //rotate
-        //Quaternion quat = Quaternion.identity;
-        //quat.eulerAngles = getGlobalEuler();
-        //transform.rotation = quat;        
-
-        
-
     }
 
     IEnumerator StartFading()
     {
         yield return new WaitForSeconds(1.0f);
         blinker.fadeOut();
+
+        if(PlayerPrefs.GetInt("hertz", 0) > 0)
+        {
+        	respawnObject.SetActive(true);
+        	respawn.begin();
+        	respawnFade.start();
+        }
     }
 
     IEnumerator StartOverlay()
     {
-        yield return new WaitForSeconds(2.0f);
-        overlay.start();
+        yield return new WaitForSeconds(3.5f);
+        if(!respawned)
+       	{
+       		 overlay.start();
+      		  respawnFade.startOut();
+      		  StartCoroutine(StartScene());
+       	}
+        else
+        {
+        	respawned = false;
+        }
+        
     }
 
     IEnumerator StartScene()
     {
-        yield return new WaitForSeconds(3.5f);
-        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        yield return new WaitForSeconds(1.5f);
+        if(!respawned)
+        	SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        else
+        {
+          	
+        }
+    }
+
+    public void startRespawn()
+    {
+    	respawned = true;
+    	gameOver = false;
+        endingThen = false;
+      	transform.position = new Vector3(transform.position.x, yPos, 0);
+    	transform.rotation = Quaternion.identity;
+    	childCube.transform.rotation = Quaternion.identity;
+    	transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+
+        StartCoroutine(resetOthers());
+    }
+
+    IEnumerator resetOthers()
+    {
+    	yield return new WaitForSeconds(0.5f);
+    	movementFactor = 1.0f;
+    	
+    	stopped = false;
+    	cameraShakeBias = 0;
+    	moving = 0;
+        jumping = false;
+        jumpingDown = false;
+        jumpFactor = defaultJumpFactor;
+        lateralBias = 0.0f;
+        jumpBias = 0.0f;
+        imageBias = 0.0f;
+        location = 0;
+        oldLocation = 0;
+        jumpQueue = false;
+        jumpDownQueue = false;
+        stopped = false;
+        animateImage = false;
     }
 
     void clearAngles()
@@ -464,15 +514,15 @@ public class Cube : MonoBehaviour
         blinker.dissolveColor();
         
         StartCoroutine(StartFading());
-        StartCoroutine(StartScene());
+        
         StartCoroutine(StartOverlay());
 
         scoreManager.addCoins();
     }
 
-    public void CollideGreen()
+    public void CollideGreen(bool force = false)
     {
-        if(!jumping || jumpBias < 0.10f || jumpBias > 0.85f)
+        if(!jumping || jumpBias < 0.10f || jumpBias > 0.85f || force)
             endGame();
     }
 

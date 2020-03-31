@@ -6,11 +6,14 @@ public class Blinker : MonoBehaviour
 {
 
 	public AnimationCurve curve = new AnimationCurve(new Keyframe(0.0f, 0.0f), new Keyframe(0.2f, 1.0f), new Keyframe(1.0f, 0.0f));
-	public Color targetColor;
+    public Color targetColor;
+	public Color targetCyanColor;
     public Color targetDissolveColor;
     public Color targetFadeColor;
 	[ColorUsageAttribute(true,true)]
 	public Color targetEmColor;
+    [ColorUsageAttribute(true,true)]
+    public Color targetEmCyanColor;
     [ColorUsageAttribute(true,true)]
     public Color targetEmDissolveColor;
     [ColorUsageAttribute(true,true)]
@@ -21,12 +24,14 @@ public class Blinker : MonoBehaviour
 	public float fadeDuration = 1.0f;
 
     Color initColor;
+    Color initEmColor;
 	Color currentColor;
 	Color currentEmColor;
     bool blinking = false;
 	bool dissolving = false;
     bool fading = false;
 	float bias = 0.0f;
+    int blinkIdx = 0;
 
 	Material mat;
     // Start is called before the first frame update
@@ -34,10 +39,12 @@ public class Blinker : MonoBehaviour
     {
         mat = GetComponent<Renderer>().material;
         initColor = mat.GetColor("_Color");
+        initEmColor = mat.GetColor("_EmissionColor");
         currentColor = mat.GetColor("_BaseColor");
         currentEmColor = mat.GetColor("_EmissionColor");
         blinking = false;
         dissolving = false;
+
         fading = false;
         bias = 0.0f;
     }
@@ -54,8 +61,11 @@ public class Blinker : MonoBehaviour
         		bias = 0.0f;
         	}
 
-        	mat.SetColor("_BaseColor", Color.Lerp(currentColor, targetColor, curve.Evaluate(bias)));
-        	mat.SetColor("_EmissionColor", Color.Lerp(currentEmColor, targetEmColor, curve.Evaluate(bias)));
+            Color thisTargetColor = (blinkIdx == 0? targetColor : targetCyanColor);
+            Color thisTargetEmColor = (blinkIdx == 0? targetEmColor : targetEmCyanColor);
+
+        	mat.SetColor("_BaseColor", Color.Lerp(currentColor, thisTargetColor, curve.Evaluate(bias)));
+        	mat.SetColor("_EmissionColor", Color.Lerp(currentEmColor, thisTargetEmColor, curve.Evaluate(bias)));
         }
 
         if(dissolving)
@@ -100,10 +110,30 @@ public class Blinker : MonoBehaviour
         }
     }
 
+    public void reset()
+    {
+        bias = 0.0f;
+        fading = false;
+        dissolving = false;
+        currentColor = initColor;
+        currentEmColor = initEmColor;
+        mat.SetColor("_Color", initColor);
+        mat.SetColor("_BaseColor", initEmColor);
+        mat.SetColor("_EmissionColor", initEmColor);
+    }
+
     public void blink()
     {
     	blinking = true;
     	bias = 0.0f;
+        blinkIdx = 0;
+    }
+
+    public void blinkCyan()
+    {
+        blinking = true;
+        bias = 0.0f;
+        blinkIdx = 1;
     }
 
     public void dissolveColor()
