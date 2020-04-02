@@ -41,8 +41,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5c624135f1ddc541a0db850b3a510c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotate: {x: 0, y: 250, z: 0}
-  speed: 300
+  rotate: {x: 1, y: 1, z: 1}
+  speed: 500
   randomize: 1
 --- !u!1 &5080293458787157804
 GameObject:
@@ -157,6 +157,26 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 225c803d16d72d5418bbeb6107963813, type: 2}
+    - target: {fileID: -1504981713932161579, guid: 3536b894bcd5acc4a8d4fca4af4c9d29,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3536b894bcd5acc4a8d4fca4af4c9d29,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3536b894bcd5acc4a8d4fca4af4c9d29,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 3536b894bcd5acc4a8d4fca4af4c9d29,
+        type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 3536b894bcd5acc4a8d4fca4af4c9d29,
         type: 3}
       propertyPath: m_Name

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class Cube : MonoBehaviour
 
 
 	[Header("Bound Objects")]
+	public MaterialManager blockMaterial;
 	public FadeIn respawnFade;
 	public Respawn respawn;
 	public GameObject respawnObject;
@@ -19,6 +21,14 @@ public class Cube : MonoBehaviour
     public OverlayManager overlay;
     public ScoreManager scoreManager;
    
+   	[Header("Events")]
+   	public UnityEvent onTrig;
+
+   	[Header("PowerUps")]
+   	public float durationUps = 7.0f;
+   	public float redMovementFactor = 3.0f;
+   	public float idleDuration = 1.5f;
+   	public float forwardRoute = 15.0f;
 
     [Header("Runtime")]
     public bool godMode = false;
@@ -68,6 +78,11 @@ public class Cube : MonoBehaviour
 
     bool jumpingDown = false;
     bool endingThen = false;
+
+    public bool powerUp = false;
+    bool redUp = false;
+    bool greenUp = false;
+    bool blueUp = false;
 
 
 	[Header("Score")]
@@ -124,6 +139,11 @@ public class Cube : MonoBehaviour
         stopped = false;
         animateImage = false;
         yieldLateral = lateralDuration / 4 - 0.02f;
+
+        powerUp = false;
+    	redUp = false;
+    	greenUp = false;
+    	blueUp = false;
 
         if(autoAdjustCam)
         {
@@ -283,6 +303,10 @@ public class Cube : MonoBehaviour
         	{
                 endGame();	
         	}
+
+        	if(redUp)
+        		enroute();
+
         }
         else
         {
@@ -296,6 +320,62 @@ public class Cube : MonoBehaviour
         		cam.transform.position = finalCamPos + offset;
         	}
         }
+    }
+
+    public void enroute()
+    {
+    	if(!validNext(location))
+    	{
+    		if(validNext(location + 1))
+    		{
+    			goRight();
+    		}
+    		else
+    		if(validNext(location - 1))
+    		{
+    			goLeft();
+    		}
+    		else
+    		if(validNext(location + 2))
+    		{
+    			goRight();
+    		}
+    		else
+    		if(validNext(location - 2))
+    		{
+    			goLeft();
+    		}
+    	}
+    }
+
+    public void startRed()
+    {
+    	if(!powerUp)
+    	{
+    		redUp = true;
+    		powerUp = true;
+    		onTrig.Invoke();
+    		movementFactor = redMovementFactor;
+    		blinker.startHalf();
+    		StartCoroutine(disableUp());
+    	}
+    }
+
+    IEnumerator disableUp()
+    {
+    	yield return new WaitForSeconds(durationUps);
+    	movementFactor = 1.0f;
+    	blinker.endHalf();
+    	StartCoroutine(disableUpFinally());
+    }
+
+    IEnumerator disableUpFinally()
+    {
+    	yield return new WaitForSeconds(idleDuration);
+    	powerUp = false;
+    	redUp = false;
+    	greenUp = false;
+    	blueUp = false;
     }
 
     IEnumerator StartFading()
@@ -334,7 +414,7 @@ public class Cube : MonoBehaviour
         	SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
         else
         {
-          	
+          	respawned = false;
         }
     }
 
@@ -347,7 +427,7 @@ public class Cube : MonoBehaviour
     	transform.rotation = Quaternion.identity;
     	childCube.transform.rotation = Quaternion.identity;
     	transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-
+    	
         StartCoroutine(resetOthers());
     }
 
@@ -371,6 +451,13 @@ public class Cube : MonoBehaviour
         jumpDownQueue = false;
         stopped = false;
         animateImage = false;
+
+        powerUp = false;
+    	redUp = false;
+    	greenUp = false;
+    	blueUp = false;
+
+    	blockMaterial.reset();
     }
 
     void clearAngles()
@@ -393,11 +480,14 @@ public class Cube : MonoBehaviour
         return eulers * 90;
     }
 
+    public void goRightM(){if(!powerUp)goRight();}
+    public void goLeftM(){if(!powerUp)goLeft();}
+    public void goUpM(){if(!powerUp)jump();}
+    public void goDownM(){if(!powerUp)jumpDown();}
+
     public void goRight()
     {
     	int target = location + 1;
-
-        
 
         if(moving == 0)
         {
@@ -505,7 +595,7 @@ public class Cube : MonoBehaviour
 
     public void endGame()
     {
-        if(godMode || gameOver)return;
+        if(godMode || gameOver || powerUp)return;
         endingThen = false;
         stopped = true;
         gameOver = true;
@@ -529,6 +619,14 @@ public class Cube : MonoBehaviour
     bool validTarget(int target)
     {
     	return manager.validTarget(target, transform.position.x);
+    }
+
+    bool validNext(int target)
+    {
+    	if(target > 1 || target < -1) 
+    		return false;
+
+    	return manager.validTarget(target, transform.position.x + forwardRoute);
     }
 
     bool validLateralTarget(int target)

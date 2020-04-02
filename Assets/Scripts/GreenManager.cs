@@ -90,6 +90,7 @@ public class GreenManager : MonoBehaviour
         for(int i=0;i<spawned.Count;i++)
             Destroy(spawned[i]);
         spawned.Clear();
+        spawned = new List<GameObject>(300);
     }
 
 }

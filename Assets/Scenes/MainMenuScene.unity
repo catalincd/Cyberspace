@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -355,7 +355,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   img: {fileID: 671661867}
   black: {r: 0, g: 0, b: 0, a: 1}
-  cyan: {r: 0, g: 1, b: 0.9137255, a: 1}
+  cyan: {r: 0, g: 0.9137255, b: 1, a: 1}
+  animationDuration: 0.72
 --- !u!1 &369602966
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,6 +863,10 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 37a6554e18bccdc479a11701bb162171, type: 3}
   - {fileID: 2800000, guid: b2c9f564356ac074a9ddcb26a7d0c176, type: 3}
   - {fileID: 2800000, guid: af16e89b4bb6c1942befb9038defcd94, type: 3}
+  - {fileID: 2800000, guid: 392487365c38dc749a51b1bbe67a1731, type: 3}
+  - {fileID: 2800000, guid: 4eef2cb78fe3ac24c94c985c768635ea, type: 3}
+  - {fileID: 2800000, guid: bbfcd3372b951b749a315687e0102c0b, type: 3}
+  - {fileID: 2800000, guid: 2658ecee799b6114da9f94f2d05444b3, type: 3}
   cubeMaterial: {fileID: 2100000, guid: 43b418a1ee9dea145b7c6fef6a4ae127, type: 2}
   xOffset: 2
   leftButton: {fileID: 1971528071}
@@ -987,7 +992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.9137255, a: 1}
+  m_Color: {r: 0, g: 0.9137255, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

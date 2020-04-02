@@ -28,10 +28,13 @@ public class Blinker : MonoBehaviour
 	Color currentColor;
 	Color currentEmColor;
     bool blinking = false;
+    bool halfDis = false;
+    bool reHalfDis = false;
 	bool dissolving = false;
     bool fading = false;
 	float bias = 0.0f;
     int blinkIdx = 0;
+    bool bDis = false;
 
 	Material mat;
     // Start is called before the first frame update
@@ -45,6 +48,7 @@ public class Blinker : MonoBehaviour
         blinking = false;
         dissolving = false;
 
+        halfDis = false;
         fading = false;
         bias = 0.0f;
     }
@@ -92,7 +96,7 @@ public class Blinker : MonoBehaviour
 
         if(fading)
         {
-            bias += Time.deltaTime / fadeDuration;
+            bias += Time.deltaTime / (fadeDuration * 4);
             
             float thisBias = Mathf.SmoothStep(0.0f, 1.0f, bias);
             mat.SetColor("_Color", Color.Lerp(initColor, targetFadeColor, thisBias));
@@ -108,12 +112,76 @@ public class Blinker : MonoBehaviour
                 mat.SetColor("_EmissionColor", targetEmFadeColor);
             }
         }
+
+        if(halfDis)
+        {
+            bias += Time.deltaTime / (fadeDuration);
+            
+            float thisBias = Mathf.SmoothStep(0.0f, 0.3f, bias);
+            mat.SetColor("_Color", Color.Lerp(currentColor, targetFadeColor, thisBias));
+            mat.SetColor("_BaseColor", Color.Lerp(currentColor, targetFadeColor, thisBias));
+            mat.SetColor("_EmissionColor", Color.Lerp(currentEmColor, targetEmFadeColor, thisBias));
+
+            if(bias >= 1.0f)
+            {
+                halfDis = false;
+                bias = 0.0f;
+
+                currentColor = Color.Lerp(initColor, targetFadeColor, 0.3f);
+                currentEmColor = Color.Lerp(initEmColor, targetEmFadeColor, 0.3f);
+
+                mat.SetColor("_Color", currentColor);
+                mat.SetColor("_BaseColor", currentColor);
+                mat.SetColor("_EmissionColor", currentEmColor);
+            }
+        }
+
+        if(reHalfDis)
+        {
+            bias += Time.deltaTime / fadeDuration;
+            
+            float thisBias = Mathf.SmoothStep(0.0f, 0.3f, bias);
+            mat.SetColor("_Color", Color.Lerp(currentColor, initColor, thisBias));
+            mat.SetColor("_BaseColor", Color.Lerp(currentColor, initColor, thisBias));
+            mat.SetColor("_EmissionColor", Color.Lerp(currentEmColor, initEmColor, thisBias));
+
+            if(bias >= 1.0f)
+            {
+                reHalfDis = false;
+                bDis = false;
+                bias = 0.0f;
+
+                currentColor = initColor;
+                currentEmColor = initEmColor;
+
+                mat.SetColor("_Color", currentColor);
+                mat.SetColor("_BaseColor", currentColor);
+                mat.SetColor("_EmissionColor", currentEmColor);
+            }
+        }
+    }
+
+    public void startHalf()
+    {
+        blinking = false;
+        bDis = true;
+        bias = 0.0f;
+        halfDis = true;
+    }
+
+    public void endHalf()
+    {
+        currentColor = Color.Lerp(initColor, targetFadeColor, 0.3f);
+        currentEmColor = Color.Lerp(initEmColor, targetEmFadeColor, 0.3f);
+        bias = 0.0f;
+        reHalfDis = true;
     }
 
     public void reset()
     {
         bias = 0.0f;
         fading = false;
+        bDis = false;
         dissolving = false;
         currentColor = initColor;
         currentEmColor = initEmColor;
@@ -124,6 +192,7 @@ public class Blinker : MonoBehaviour
 
     public void blink()
     {
+        if(bDis)return;
     	blinking = true;
     	bias = 0.0f;
         blinkIdx = 0;

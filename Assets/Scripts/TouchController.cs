@@ -108,21 +108,21 @@ public class TouchController : MonoBehaviour
     //////////////////////////////////CALLBACK FUNCTIONS/////////////////////////////
     void OnSwipeUp()
     {
-    	cube.jump();
+    	cube.goUpM();
     }
 
     void OnSwipeDown()
     {
-        cube.jumpDown();
+        cube.goDownM();
     }
 
     void OnSwipeLeft()
     {
-        cube.goRight();
+        cube.goRightM();
     }
 
     void OnSwipeRight()
     {
-        cube.goLeft();
+        cube.goLeftM();
     }
 }

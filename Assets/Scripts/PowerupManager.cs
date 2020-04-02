@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerupManger : MonoBehaviour
+public class PowerupManager : MonoBehaviour
 {
 
-	public GameObject cam;
+    public GameObject cam;
+	public Cube cube;
     public TileManager tiles;
 	
 	private List<GameObject> spawned;
@@ -58,9 +59,13 @@ public class PowerupManger : MonoBehaviour
             int id = 0;
             while(rnd > probabilities[id])id++;
 
+            if(id > 0 && cube.powerUp)
+                id = (Random.value > 0.1f? 0 : probabilities.Length - 1);
+
     		GameObject tile;
 	    	tile = Instantiate(ups[id]) as GameObject; 
 	    	tile.transform.SetParent(transform);  	
+            //Debug.Log(tile.tag);
 
             //if(id == 1) Debug.Log("YES");   
 

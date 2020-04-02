@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Collision : MonoBehaviour
 {
 
+    
 	public ScoreManager score;
     public Cube cube;
     Blinker blinker;
@@ -48,6 +50,12 @@ public class Collision : MonoBehaviour
         if(gOther.tag == "CP")
         {
             cube.CollideGreen(true);
+        }
+        else
+        if(gOther.tag == "T")
+        {
+            cube.startRed();
+            Destroy(gOther);
         }
     }
 }
