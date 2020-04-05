@@ -7,6 +7,7 @@ public class Rotate : MonoBehaviour
     public Vector3 rotate;
     public float speed = 300;
     public bool randomize = true;
+    public bool randomizeDirection = false;
 
 
     void Start()
@@ -17,13 +18,14 @@ public class Rotate : MonoBehaviour
         	//rotate.y = getRand();
         	//rotate.z = getRand();
             
-            rotate.x = Random.value;
-            rotate.y = Random.Range(0, rotate.x);
-            rotate.z = 1.0f - (rotate.x + rotate.y);
+            rotate = Random.insideUnitSphere;
+        }
 
-            rotate.x *= randSign();
-            rotate.y *= randSign();
-            rotate.z *= randSign();
+        if(randomizeDirection)
+        {
+        	rotate.x = getRand();
+        	rotate.y = getRand();
+        	rotate.z = getRand();
         }
         rotate *= speed;
     }

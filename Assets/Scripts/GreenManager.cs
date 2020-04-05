@@ -10,7 +10,8 @@ public class GreenManager : MonoBehaviour
     public float YPosUp = 1.75f;
 	public float YPosTop = 1.75f;
     public GameObject cylinder;
-	public GameObject cylinderP;
+    public GameObject cylinderP;
+	public GameObject trig;
 	public GameObject cam;
 	public float offset = 5.0f;
 	public float offsetSeed = 2.0f;
@@ -47,6 +48,29 @@ public class GreenManager : MonoBehaviour
     }
 
     void add()
+    {
+        if(Random.value > 0.4f)
+        {
+            addCylinder();
+        }
+        else
+        {
+            addTrig();
+        }
+    }
+
+    void addTrig()
+    {
+        GameObject tile = Instantiate(trig) as GameObject; 
+        tile.transform.SetParent(transform);    
+        tile.transform.position = (new Vector3(Mathf.Floor(lastAdded), YPosDown, 0));
+        spawned.Add(tile);
+
+        lastAdded += thisOffset;
+        thisOffset = offset + Random.Range(-offsetSeed, offsetSeed);
+    }
+
+    void addCylinder()
     {
 	    
 

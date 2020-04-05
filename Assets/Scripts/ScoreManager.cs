@@ -7,6 +7,7 @@ public class ScoreManager : MonoBehaviour
 {
 
 	public Text display;
+    public int powerupCoins = 20;
 
     int currentScore = 0;
     int lastAdded = 0;
@@ -35,6 +36,15 @@ public class ScoreManager : MonoBehaviour
     	if(!stopped)
         {
             currentScore++;
+            display.text = "" + currentScore;
+        }
+    }
+
+    public void incrementMult()
+    {
+        if(!stopped)
+        {
+            currentScore += powerupCoins;
             display.text = "" + currentScore;
         }
     }

@@ -10,8 +10,10 @@ ScriptsOnlyBuild:
     - FadeIn
     - GreenManager
     - MainMenuCube
+    - MaterialManager
     - OverlayManager
-    - PowerupManger
+    - PauseManager
+    - PowerupManager
     - Respawn
     - Rotate
     - RotateRandom
@@ -33,6 +35,7 @@ ScriptsOnlyBuild:
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
+    - TMPro.TextMeshProUGUI
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -66,6 +69,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 54
       Script: {instanceID: 0}
+    - Class: 64
+      Script: {instanceID: 0}
     - Class: 65
       Script: {instanceID: 0}
     - Class: 81
@@ -77,53 +82,61 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9850}
     - Class: 114
-      Script: {instanceID: 10146}
+      Script: {instanceID: 9996}
     - Class: 114
-      Script: {instanceID: 10224}
+      Script: {instanceID: 10148}
     - Class: 114
-      Script: {instanceID: 10494}
+      Script: {instanceID: 10226}
     - Class: 114
-      Script: {instanceID: 10558}
+      Script: {instanceID: 10496}
     - Class: 114
-      Script: {instanceID: 10604}
+      Script: {instanceID: 10560}
     - Class: 114
-      Script: {instanceID: 10614}
+      Script: {instanceID: 10606}
     - Class: 114
-      Script: {instanceID: 10698}
+      Script: {instanceID: 10616}
     - Class: 114
-      Script: {instanceID: 10904}
+      Script: {instanceID: 10700}
     - Class: 114
-      Script: {instanceID: 10948}
+      Script: {instanceID: 10906}
     - Class: 114
-      Script: {instanceID: 11160}
+      Script: {instanceID: 10912}
     - Class: 114
-      Script: {instanceID: 11264}
+      Script: {instanceID: 10952}
     - Class: 114
-      Script: {instanceID: 11504}
+      Script: {instanceID: 11164}
     - Class: 114
-      Script: {instanceID: 11588}
+      Script: {instanceID: 11268}
     - Class: 114
-      Script: {instanceID: 11728}
+      Script: {instanceID: 11508}
     - Class: 114
-      Script: {instanceID: 11814}
+      Script: {instanceID: 11592}
     - Class: 114
-      Script: {instanceID: 11908}
+      Script: {instanceID: 11732}
     - Class: 114
-      Script: {instanceID: 12180}
+      Script: {instanceID: 11818}
     - Class: 114
-      Script: {instanceID: 12336}
+      Script: {instanceID: 11912}
     - Class: 114
-      Script: {instanceID: 12810}
+      Script: {instanceID: 11928}
     - Class: 114
-      Script: {instanceID: 12830}
+      Script: {instanceID: 12030}
     - Class: 114
-      Script: {instanceID: 12832}
+      Script: {instanceID: 12096}
     - Class: 114
-      Script: {instanceID: 12972}
+      Script: {instanceID: 12188}
     - Class: 114
-      Script: {instanceID: 17364}
+      Script: {instanceID: 12236}
     - Class: 114
-      Script: {instanceID: 19344}
+      Script: {instanceID: 12344}
+    - Class: 114
+      Script: {instanceID: 12818}
+    - Class: 114
+      Script: {instanceID: 12838}
+    - Class: 114
+      Script: {instanceID: 12840}
+    - Class: 114
+      Script: {instanceID: 12980}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -178,37 +191,39 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9850}
     - Class: 114
-      Script: {instanceID: 10146}
+      Script: {instanceID: 10148}
     - Class: 114
-      Script: {instanceID: 10224}
+      Script: {instanceID: 10226}
     - Class: 114
-      Script: {instanceID: 10604}
+      Script: {instanceID: 10606}
     - Class: 114
-      Script: {instanceID: 10752}
+      Script: {instanceID: 10754}
     - Class: 114
-      Script: {instanceID: 10904}
+      Script: {instanceID: 10906}
     - Class: 114
-      Script: {instanceID: 10950}
+      Script: {instanceID: 10954}
     - Class: 114
-      Script: {instanceID: 11588}
+      Script: {instanceID: 11592}
     - Class: 114
-      Script: {instanceID: 11924}
+      Script: {instanceID: 11928}
     - Class: 114
-      Script: {instanceID: 11944}
+      Script: {instanceID: 11948}
     - Class: 114
-      Script: {instanceID: 12116}
+      Script: {instanceID: 12124}
     - Class: 114
-      Script: {instanceID: 12336}
+      Script: {instanceID: 12236}
     - Class: 114
-      Script: {instanceID: 12614}
+      Script: {instanceID: 12344}
     - Class: 114
-      Script: {instanceID: 12780}
+      Script: {instanceID: 12622}
     - Class: 114
-      Script: {instanceID: 12892}
+      Script: {instanceID: 12788}
     - Class: 114
-      Script: {instanceID: 12972}
+      Script: {instanceID: 12900}
     - Class: 114
-      Script: {instanceID: 13020}
+      Script: {instanceID: 12980}
+    - Class: 114
+      Script: {instanceID: 13028}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -272,6 +287,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Dropdown
+  - hash:
+      serializedVersion: 2
+      Hash: 6709baca1abdff7d3a03d8283730b7dd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MaterialManager
   - hash:
       serializedVersion: 2
       Hash: 71f7f12b8d0f4fd73590db8bcb6d453c
@@ -412,7 +433,7 @@ ScriptsOnlyBuild:
     className: Vignette
   - hash:
       serializedVersion: 2
-      Hash: 455d8ff4d1e37c5cd28988343a855700
+      Hash: eb50996bfbe22d9241455f2f8cc5b478
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Rotate
@@ -436,7 +457,7 @@ ScriptsOnlyBuild:
     className: StaticBlink
   - hash:
       serializedVersion: 2
-      Hash: db3ab3f2b4342bd56e65b879ec89521f
+      Hash: 14ab0b49fcaa6866b9f1793712530fc3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Cube
@@ -454,7 +475,7 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
-      Hash: 3801c1d173edae4f3c3993482eb131b5
+      Hash: 555acc9fc532a90917eb90dfa9a55ed4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: OverlayManager
@@ -514,13 +535,19 @@ ScriptsOnlyBuild:
     className: EventSystem
   - hash:
       serializedVersion: 2
+      Hash: 9d2bd072d0b9d58023d3d9bbae1955db
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FadeIn
+  - hash:
+      serializedVersion: 2
       Hash: 0fb27be807aa299702f28ad0bcad1f46
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: c51e664572f721b8eadfdce17ecca782
+      Hash: 188f01fbccba1699e3909d271d18b212
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ScoreManager
@@ -556,7 +583,7 @@ ScriptsOnlyBuild:
     className: LightweightRenderPipelineAsset
   - hash:
       serializedVersion: 2
-      Hash: de6564c1b0e635d00ad1fcde51756274
+      Hash: 36061140252c672b60dc9a071090f661
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GreenManager
@@ -664,10 +691,10 @@ ScriptsOnlyBuild:
     className: TranslationY
   - hash:
       serializedVersion: 2
-      Hash: d3cd1c4e6c36322646b49616ce3822c3
+      Hash: b78bc37fc375b79dcf246e9d9b243668
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: PowerupManger
+    className: PowerupManager
   - hash:
       serializedVersion: 2
       Hash: 783f593b9380cf72d0f7ebfd4a0d4bcd
@@ -724,6 +751,12 @@ ScriptsOnlyBuild:
     className: VolumeComponent
   - hash:
       serializedVersion: 2
+      Hash: d0e4e34e4143d2edc3537d9ad5b3ee66
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Respawn
+  - hash:
+      serializedVersion: 2
       Hash: c1933cc0a2f4ff6eb13333347497beb3
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -734,6 +767,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Lightweight.Runtime.dll
     namespaceName: UnityEngine.Experimental.Rendering.LWRP
     className: PixelPerfectCamera
+  - hash:
+      serializedVersion: 2
+      Hash: d0adc65b6f54d204e5a5dc174eb9a803
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PauseManager
   - hash:
       serializedVersion: 2
       Hash: 32424fe5c3ec02f797d7cfa604cd0383
@@ -754,7 +793,7 @@ ScriptsOnlyBuild:
     className: RenderObjects
   - hash:
       serializedVersion: 2
-      Hash: 753e4516535f73ff75bf52c4184f2d67
+      Hash: 106c43f3d889019d2d02dd35f87955ef
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Collision
@@ -956,20 +995,8 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 9d2bd072d0b9d58023d3d9bbae1955db
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: FadeIn
-  - hash:
-      serializedVersion: 2
-      Hash: d0e4e34e4143d2edc3537d9ad5b3ee66
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Respawn
   platform: 13
   scenePathNames:
   - Assets/Scenes/MainMenuScene.unity
   - Assets/Scenes/GameScene.unity
-  playerPath: C:/Users/KTA/Desktop/Cyberspace v0.23.apk
+  playerPath: C:/Users/KTA/Desktop/Cyberspace v0.25.apk

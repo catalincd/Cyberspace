@@ -96,7 +96,7 @@ public class Blinker : MonoBehaviour
 
         if(fading)
         {
-            bias += Time.deltaTime / (fadeDuration * 4);
+            bias += Time.deltaTime / (fadeDuration);
             
             float thisBias = Mathf.SmoothStep(0.0f, 1.0f, bias);
             mat.SetColor("_Color", Color.Lerp(initColor, targetFadeColor, thisBias));

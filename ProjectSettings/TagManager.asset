@@ -9,6 +9,9 @@ TagManager:
   - B
   - CP
   - T
+  - T2
+  - T3
+  - CT
   layers:
   - Default
   - TransparentFX

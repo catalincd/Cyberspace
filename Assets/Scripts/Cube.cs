@@ -29,11 +29,14 @@ public class Cube : MonoBehaviour
    	public float redMovementFactor = 3.0f;
    	public float idleDuration = 1.5f;
    	public float forwardRoute = 15.0f;
+   	public bool m_lockWhilePowerUp = false;
+   	bool upSent = false;
 
     [Header("Runtime")]
     public bool godMode = false;
     public float speed = 7.0f;
     public float targetSpeed = 9.0f;
+    public float targetSpeedMult = 2.5f;
     public AnimationCurve speedAnimationCurve = new AnimationCurve(new Keyframe(0.0f, 0.0f), new Keyframe(1.0f, 1.0f));
     public float xTarget = 30.0f;
     public float yPos = 0.51f;
@@ -83,6 +86,7 @@ public class Cube : MonoBehaviour
     bool redUp = false;
     bool greenUp = false;
     bool blueUp = false;
+    bool noControls = false;
 
 
 	[Header("Score")]
@@ -177,6 +181,8 @@ public class Cube : MonoBehaviour
         if(!stopped)
         {
 
+        	float speedBias = speedAnimationCurve.Evaluate(Mathf.Min(1.0f, transform.position.x / xTarget));
+        	float speedAnimBias = Mathf.Lerp(1.0f, targetSpeedMult, speedBias);
         	float zPos = transform.position.z;
 	        float nyPos = transform.position.y;
 	        Quaternion rot = Quaternion.AngleAxis(90, Vector3.forward);
@@ -185,7 +191,7 @@ public class Cube : MonoBehaviour
 
 	        if(moving != 0)
 	        {
-	            lateralBias += Time.deltaTime / lateralDuration;
+	            lateralBias += Time.deltaTime * speedAnimBias / lateralDuration;
 
 
 	            zPos = Mathf.Lerp(oldLocation, location, lateralBias) * lateralOffset;
@@ -216,7 +222,7 @@ public class Cube : MonoBehaviour
 
 		    	if(jumpingDown)
 		        {
-		        	jumpBias += jumpFactor * Time.deltaTime / jumpDownDuration;
+		        	jumpBias += jumpFactor * speedAnimBias * Time.deltaTime / jumpDownDuration;
 		    		float jumpAnimationBias = Mathf.Min(1.0f, jumpBias * animationRatio);
 		        	nyPos = yPos - Mathf.Lerp(0, jumpDownOffset, jumpCurve.Evaluate(jumpBias));
 
@@ -242,7 +248,7 @@ public class Cube : MonoBehaviour
 		        }
 		        else
 		        {    
-		        	jumpBias += jumpFactor * Time.deltaTime / jumpDuration;
+		        	jumpBias += jumpFactor * speedAnimBias * Time.deltaTime / jumpDuration;
 		    		float jumpAnimationBias = Mathf.Min(1.0f, jumpBias * animationRatio);
 
 		            nyPos = yPos + Mathf.Lerp(0, jumpOffset, jumpCurve.Evaluate(jumpBias));
@@ -266,7 +272,7 @@ public class Cube : MonoBehaviour
 
 
 	        //move
-            float thisSpeed = Mathf.Lerp(speed, targetSpeed, speedAnimationCurve.Evaluate(Mathf.Min(1.0f, transform.position.x / xTarget)));
+            float thisSpeed = Mathf.Lerp(speed, targetSpeed, speedBias);
 	        //Debug.Log("" + thisSpeed);
             float xOffset = Time.deltaTime * thisSpeed * movementFactor;
 	        transform.position = new Vector3(transform.position.x + xOffset, nyPos, zPos);
@@ -326,6 +332,7 @@ public class Cube : MonoBehaviour
     {
     	if(!validNext(location))
     	{
+    		upSent = true;
     		if(validNext(location + 1))
     		{
     			goRight();
@@ -350,10 +357,11 @@ public class Cube : MonoBehaviour
 
     public void startRed()
     {
-    	if(!powerUp)
+    	if(!powerUp && !gameOver)
     	{
     		redUp = true;
     		powerUp = true;
+    		noControls = true;
     		onTrig.Invoke();
     		movementFactor = redMovementFactor;
     		blinker.startHalf();
@@ -365,6 +373,7 @@ public class Cube : MonoBehaviour
     {
     	yield return new WaitForSeconds(durationUps);
     	movementFactor = 1.0f;
+    	noControls = false;
     	blinker.endHalf();
     	StartCoroutine(disableUpFinally());
     }
@@ -423,6 +432,7 @@ public class Cube : MonoBehaviour
     	respawned = true;
     	gameOver = false;
         endingThen = false;
+        noControls = false;
       	transform.position = new Vector3(transform.position.x, yPos, 0);
     	transform.rotation = Quaternion.identity;
     	childCube.transform.rotation = Quaternion.identity;
@@ -480,14 +490,19 @@ public class Cube : MonoBehaviour
         return eulers * 90;
     }
 
-    public void goRightM(){if(!powerUp)goRight();}
-    public void goLeftM(){if(!powerUp)goLeft();}
-    public void goUpM(){if(!powerUp)jump();}
-    public void goDownM(){if(!powerUp)jumpDown();}
+    public void goRightM(){if(!noControls || !m_lockWhilePowerUp)goRight();}
+    public void goLeftM(){if(!noControls || !m_lockWhilePowerUp)goLeft();}
+    public void goUpM(){if(!noControls || !m_lockWhilePowerUp)jump();}
+    public void goDownM(){if(!noControls || !m_lockWhilePowerUp)jumpDown();}
 
     public void goRight()
     {
     	int target = location + 1;
+    	if(powerUp)
+    	{
+    		if(!validNext(target) && !upSent)
+    			return;
+    	}
 
         if(moving == 0)
         {
@@ -495,6 +510,7 @@ public class Cube : MonoBehaviour
             {
                 StartCoroutine(endThen());
             }
+            upSent = false;
             moving = 1;
             location++;
             if(!jumping)
@@ -508,8 +524,15 @@ public class Cube : MonoBehaviour
     public void goLeft()
     {
     	int target = location - 1;
+    	if(powerUp)
+    	{
+    		if(!validNext(target) && !upSent)
+    			return;
+    	}
+
         if(moving == 0)
         {
+        	upSent = false;
             if(!validLateralTarget(target) || location == -1)
             {
               StartCoroutine(endThen());
@@ -572,7 +595,7 @@ public class Cube : MonoBehaviour
                 jumpDownQueue = true;
                 jumpFactor = defaultJumpFactor * jumpFactorMultiplier;
             }
-            else if(jumpBias < 0.8f && jumpingDown)
+            else if(jumpBias < 0.85f && jumpingDown)
             {
                 jumpBias = 0.4f;
                 jumpFactor = defaultJumpFactor * 1.07f;
@@ -589,7 +612,9 @@ public class Cube : MonoBehaviour
     IEnumerator endThen()
     {
         endingThen = true;
-        yield return new WaitForSeconds(yieldLateral);
+        float speedBias = speedAnimationCurve.Evaluate(Mathf.Min(1.0f, transform.position.x / xTarget));
+        float speedAnimBias = Mathf.Lerp(1.0f, targetSpeedMult, speedBias);
+        yield return new WaitForSeconds(yieldLateral / speedAnimBias);
         endGame();
     }
 

@@ -88,6 +88,18 @@ public class MaterialManager : MonoBehaviour
     	start();
     }
 
+    public void startGreen()
+    {
+        targetColor = green;
+        start();
+    }
+
+    public void startBlue()
+    {
+        targetColor = blue;
+        start();
+    }
+
     IEnumerator Descend()
     {
     	yield return new WaitForSeconds(duration - animationDuration);

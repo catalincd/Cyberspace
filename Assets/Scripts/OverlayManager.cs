@@ -9,6 +9,7 @@ public class OverlayManager : MonoBehaviour
 	public Image img;
 	public Color black;
 	public Color cyan;
+    public GameObject obj;
 
 	float bias = 1.0f;
 	public float animationDuration = 0.72f;
@@ -44,6 +45,7 @@ public class OverlayManager : MonoBehaviour
 
     public void respStart()
     {
+        obj.SetActive(true);
         up2 = true;
          up = false;
         down = false;
@@ -52,6 +54,7 @@ public class OverlayManager : MonoBehaviour
 
     public void start()
     {
+        obj.SetActive(true);
     	up = true;
     	down = false;
     }
@@ -80,6 +83,7 @@ public class OverlayManager : MonoBehaviour
                 down2 = false;
                 bias = 0.0f;
                 img.color = blackTransparent;
+                obj.SetActive(false);
             }
         }
         else if(up)
@@ -102,6 +106,7 @@ public class OverlayManager : MonoBehaviour
         		down = false;
         		bias = 0.0f;
         		img.color = cyanTransparent;
+                obj.SetActive(false);
         	}
         }
     }
