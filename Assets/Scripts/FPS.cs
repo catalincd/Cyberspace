@@ -4,8 +4,14 @@ using UnityEngine.UI;
  
 public class FPS : MonoBehaviour
 {
+	public GameObject obj;
 	public Text fpsText;
 	float deltaTime = 0.0f;
+
+	void Start()
+	{
+		obj.SetActive(PlayerPrefs.GetInt("FPS") > 0);
+	}
  
 	void Update()
 	{

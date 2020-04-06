@@ -26,6 +26,7 @@ public class OverlayManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        obj.SetActive(true);
         img.color = black;
         down = true;
         bias = 0.0f;

@@ -1,7 +1,10 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - AnisotropicSet
+    - AntiAliasingSet
     - AppSet
+    - BackButton
     - Blinker
     - Collision
     - Cube
@@ -21,6 +24,7 @@ ScriptsOnlyBuild:
     - ScoreManager
     - SetTexture
     - Settings
+    - ShowFps
     - TileManager
     - TouchController
     - Translation
@@ -29,7 +33,6 @@ ScriptsOnlyBuild:
     - UnityEngine.Rendering.LWRP.ForwardRendererData
     - UnityEngine.Rendering.LWRP.LWRPAdditionalCameraData
     - UnityEngine.Rendering.LWRP.LightweightRenderPipelineAsset
-    - UnityEngine.Rendering.LWRP.LightweightRenderPipelineEditorResources
     Unity.TextMeshPro.dll:
     - TMPro.TMP_FontAsset
     - TMPro.TMP_Settings
@@ -231,6 +234,65 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/SettingsScene.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9850}
+    - Class: 114
+      Script: {instanceID: 10226}
+    - Class: 114
+      Script: {instanceID: 10606}
+    - Class: 114
+      Script: {instanceID: 10696}
+    - Class: 114
+      Script: {instanceID: 10906}
+    - Class: 114
+      Script: {instanceID: 11112}
+    - Class: 114
+      Script: {instanceID: 11592}
+    - Class: 114
+      Script: {instanceID: 11928}
+    - Class: 114
+      Script: {instanceID: 12124}
+    - Class: 114
+      Script: {instanceID: 12236}
+    - Class: 114
+      Script: {instanceID: 12344}
+    - Class: 114
+      Script: {instanceID: 12980}
+    - Class: 114
+      Script: {instanceID: 18744}
+    - Class: 114
+      Script: {instanceID: 19382}
+    - Class: 114
+      Script: {instanceID: 20876}
+    - Class: 114
+      Script: {instanceID: 24374}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 157
       Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
@@ -637,7 +699,7 @@ ScriptsOnlyBuild:
     className: RemoteTestResultSender
   - hash:
       serializedVersion: 2
-      Hash: ac93773f9bac168f34bcc2769c36a118
+      Hash: e846c45f206126affa7b3682e804139d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FPS
@@ -995,8 +1057,33 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 153406d333c0d1e4f62ab00f2be4b4ff
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AntiAliasingSet
+  - hash:
+      serializedVersion: 2
+      Hash: 6c9bc4ca9a6147e7f7238cf7183300c8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AnisotropicSet
+  - hash:
+      serializedVersion: 2
+      Hash: eb41be297b65c204c57fd8ebcbcab393
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BackButton
+  - hash:
+      serializedVersion: 2
+      Hash: ee98729079998eb63435f99f41b30b9e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ShowFps
   platform: 13
   scenePathNames:
   - Assets/Scenes/MainMenuScene.unity
   - Assets/Scenes/GameScene.unity
-  playerPath: C:/Users/KTA/Desktop/Cyberspace v0.25.apk
+  - Assets/Scenes/SettingsScene.unity
+  playerPath: C:/Users/KTA/Desktop/Cyberspace v0.26.apk

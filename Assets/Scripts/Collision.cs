@@ -26,7 +26,7 @@ public class Collision : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         GameObject gOther = other.gameObject;
-        Debug.Log(gOther.tag);
+        //Debug.Log(gOther.tag);
         if(gOther.tag == "P")
         {
             blinker.blink();

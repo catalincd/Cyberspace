@@ -38,4 +38,40 @@ public class SceneManagerObject : MonoBehaviour
         //Debug.Log("FUCK");
         SetGameSceneNow();
     }
+
+    public void SetSettingsSceneNow()
+    {
+    	 SceneManager.LoadScene("SettingsScene", LoadSceneMode.Single);
+    }
+
+    public void SetSettingsScene()
+    {
+        StartCoroutine(SetSettingsSceneAfterSeconds());
+    }
+
+    IEnumerator SetSettingsSceneAfterSeconds()
+    {
+        overlay.start();
+        yield return new WaitForSeconds(animationTime);
+        //Debug.Log("FUCK");
+        SetSettingsSceneNow();
+    }
+
+    public void SetMainMenuSceneNow()
+    {
+         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+    }
+
+    public void SetMainMenuScene()
+    {
+        StartCoroutine(SetMainMenuSceneAfterSeconds());
+    }
+
+    IEnumerator SetMainMenuSceneAfterSeconds()
+    {
+        overlay.start();
+        yield return new WaitForSeconds(animationTime);
+        //Debug.Log("FUCK");
+        SetMainMenuSceneNow();
+    }
 }
