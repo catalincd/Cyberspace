@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +32,32 @@ public class MainMenuCube : MonoBehaviour
 	float zPos;
 
 
-    // Start is called before the first frame update
+    uint[] available;
+    uint[] newCubes;
+
+    public void loadCubes()
+    {
+        ///BytesManagerCheck
+        available = stringToArray(PlayerPrefs.GetString("Available", ""));
+        newCubes = stringToArray(PlayerPrefs.GetString("New", ""));
+
+        if(available == null || newCubes == null)
+        {
+            available = new uint[cubeTextures.Length];
+            available[0] = 1;
+
+            newCubes = new uint[cubeTextures.Length];
+            saveCubes();
+        }
+    }
+
+    public void saveCubes()
+    {
+        PlayerPrefs.SetString("Available", arrayToString(available));
+        PlayerPrefs.SetString("New", arrayToString(newCubes));
+    }
+
+
     void Start()
     {
         cubes = new List<GameObject> (30);
@@ -106,5 +132,29 @@ public class MainMenuCube : MonoBehaviour
     	PlayerPrefs.SetInt("selected", selected);
     	leftButton.interactable = (selected > 0);
     	rightButton.interactable = (selected < cubeTextures.Length - 1);
+    }
+
+
+    public static string arrayToString(uint[] arr)
+    {
+        string q = "" + arr[0];
+        for(int i=1;i<arr.Length;i++)
+        {
+            q += "," + arr[i];
+        }
+        return q;
+    }
+
+    public static uint[] stringToArray(string q)
+    {
+        if(q == "")return null;
+
+        string[] qrr = q.Split(',');
+        uint[] arr = new uint[qrr.Length];
+        for(int i=0;i<qrr.Length;i++)
+        {
+            arr[i] = UInt32.Parse(qrr[i]);
+        }
+        return arr;
     }
 }

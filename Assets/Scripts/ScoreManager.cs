@@ -9,6 +9,7 @@ public class ScoreManager : MonoBehaviour
 	public Text display;
     public int powerupCoins = 20;
 
+    int initBytes;
     int currentScore = 0;
     int lastAdded = 0;
 	int currentHertz = 0;
@@ -20,6 +21,7 @@ public class ScoreManager : MonoBehaviour
     {
         lastAdded = 0;
         currentScore = 0;
+        initBytes = Achievements.getBytes();
         currentHertz = PlayerPrefs.GetInt("hertz", 0);
         if(!stopped)
             display.text = "";
@@ -65,8 +67,8 @@ public class ScoreManager : MonoBehaviour
     public void addCoins()
     {
         PlayerPrefs.SetInt("bytes", PlayerPrefs.GetInt("bytes", 0) + currentScore - lastAdded);
+        PlayerPrefs.SetInt("A_BYTES", initBytes + currentScore - lastAdded);
         lastAdded = currentScore;
-        //PlayerPrefs.SetInt("hertz", currentHertz);
     }
 
     

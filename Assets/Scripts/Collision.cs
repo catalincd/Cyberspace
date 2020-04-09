@@ -55,7 +55,7 @@ public class Collision : MonoBehaviour
         else
         if(gOther.tag == "CT")
         {
-            cube.CollideGreen(true);
+            cube.CollideGreenTrig();
         }
         else
         if(gOther.tag == "T")

@@ -1,0 +1,7 @@
+v0.28 [Alpha Testing]
+
+-New Test AdRequest
+-New Extra Items
+
+
+TO-DO: 20 000 bytes to disable ads

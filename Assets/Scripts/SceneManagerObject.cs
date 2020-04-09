@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class SceneManagerObject : MonoBehaviour
 {
     public float animationTime = 0.75f;
     public OverlayManager overlay;
+    public UnityEvent destroyEvent;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +24,8 @@ public class SceneManagerObject : MonoBehaviour
 
     public void SetGameSceneNow()
     {
-    	 SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
+        destroyEvent.Invoke();
+    	SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
     }
 
     public void SetGameScene()

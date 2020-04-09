@@ -359,6 +359,7 @@ public class Cube : MonoBehaviour
     {
     	if(!powerUp && !gameOver)
     	{
+            Achievements.incUps();
     		redUp = true;
     		powerUp = true;
     		noControls = true;
@@ -420,7 +421,10 @@ public class Cube : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         if(!respawned)
-        	SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        {
+            Achievements.incDeaths();
+            SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        }
         else
         {
           	respawned = false;
@@ -429,6 +433,7 @@ public class Cube : MonoBehaviour
 
     public void startRespawn()
     {
+        Achievements.incRespawns();
     	respawned = true;
     	gameOver = false;
         endingThen = false;
@@ -638,6 +643,14 @@ public class Cube : MonoBehaviour
     public void CollideGreen(bool force = false)
     {
         if(!jumping || jumpBias < 0.10f || jumpBias > 0.85f || force)
+            endGame();
+    }
+
+    public void CollideGreenTrig()
+    {
+        if(jumping && !jumpingDown)
+            CollideGreen();
+        else
             endGame();
     }
 
