@@ -1,7 +1,9 @@
-v0.28 [Alpha Testing]
+v0.29 [Alpha Testing]
 
 -New Test AdRequest
 -New Extra Items
-
+-New 10 Cubes
+-New Missions
+-New HighScore system
 
 TO-DO: 20 000 bytes to disable ads

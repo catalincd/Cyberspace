@@ -64,6 +64,11 @@ public class ScoreManager : MonoBehaviour
     	return currentScore;
     }
 
+    public void publishScore(int thisScore)
+    {
+        PlayerPrefs.SetInt("LAST_SCORE", thisScore);
+    }
+
     public void addCoins()
     {
         PlayerPrefs.SetInt("bytes", PlayerPrefs.GetInt("bytes", 0) + currentScore - lastAdded);

@@ -26,8 +26,11 @@ public class AdManager : MonoBehaviour
 
         debugText.text = "Initialized";
 
-        this.RequestBanner();
-        this.ShowBanner();
+        if(PlayerPrefs.GetInt("ADS", 1) > 0)
+        {
+            this.RequestBanner();
+            this.ShowBanner();
+        }
     }
 
     private void RequestBanner()

@@ -423,6 +423,10 @@ public class Cube : MonoBehaviour
         if(!respawned)
         {
             Achievements.incDeaths();
+
+            float currentScore = (transform.position.x - initXPos) * scoreMultiplier * decimalsMultiplier;
+            scoreManager.publishScore((int) currentScore);
+            
             SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
         }
         else
@@ -638,6 +642,7 @@ public class Cube : MonoBehaviour
         StartCoroutine(StartOverlay());
 
         scoreManager.addCoins();
+
     }
 
     public void CollideGreen(bool force = false)

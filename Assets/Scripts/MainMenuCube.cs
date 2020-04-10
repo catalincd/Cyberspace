@@ -1,14 +1,28 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainMenuCube : MonoBehaviour
 {
 
     public Text coins;
     public Text hertz;
+    public Text highScore;
+    public Text highText;
+
+    public TextAsset DefaultAsset;
+
+    public TextMeshProUGUI topText;
+    public TextMeshProUGUI bottomText;
+    public TextMeshProUGUI costText;
+    public GameObject img;
+
+    public Button StartButton;
+
 	public GameObject cam;
 	public GameObject cubeToInstatiate;
     public Texture[] cubeTextures;
@@ -17,7 +31,12 @@ public class MainMenuCube : MonoBehaviour
 
     public Button leftButton;
     public Button rightButton;
+
+    public GameObject leftNew;
+    public GameObject rightNew;
+
 	List<GameObject> cubes;
+    List<MCube> MCubes;
 
 	public int selected = 0;
 
@@ -31,36 +50,75 @@ public class MainMenuCube : MonoBehaviour
 	float yPos;
 	float zPos;
 
+    int minNew;
+    int maxNew;
+    bool isNew = false;
 
-    uint[] available;
-    uint[] newCubes;
 
-    public void loadCubes()
+    List<int> newCubes;
+
+
+    void refreshNews(bool force = false)
     {
-        ///BytesManagerCheck
-        available = stringToArray(PlayerPrefs.GetString("Available", ""));
-        newCubes = stringToArray(PlayerPrefs.GetString("New", ""));
+        if(!isNew && !force)return;
 
-        if(available == null || newCubes == null)
+        if(!force)
         {
-            available = new uint[cubeTextures.Length];
-            available[0] = 1;
+            for(int i=0;i<newCubes.Count;i++)
+            {
+                if(newCubes[i] == selected)
+                    newCubes.RemoveAt(i);
+            }
+        }
 
-            newCubes = new uint[cubeTextures.Length];
-            saveCubes();
+        if(newCubes.Count > 0)
+        {
+            isNew = true;
+            minNew = maxNew = newCubes[0];
+            for(int i=1;i<newCubes.Count;i++)
+            {
+                minNew = Mathf.Min(minNew, newCubes[i]);
+                maxNew = Mathf.Max(minNew, newCubes[i]);
+            }
+        }
+        else 
+            isNew = false;
+
+        if(isNew)
+        {   
+            leftNew.SetActive(minNew <= selected);
+            rightNew.SetActive(maxNew >= selected);
+        }
+        else
+        {
+            leftNew.SetActive(false);
+            rightNew.SetActive(false);
         }
     }
 
-    public void saveCubes()
-    {
-        PlayerPrefs.SetString("Available", arrayToString(available));
-        PlayerPrefs.SetString("New", arrayToString(newCubes));
-    }
 
 
     void Start()
     {
-        cubes = new List<GameObject> (30);
+
+        if(PlayerPrefs.GetInt("LAST_SCORE") > PlayerPrefs.GetInt("HIGH_SCORE"))
+        {
+            PlayerPrefs.SetInt("HIGH_SCORE", PlayerPrefs.GetInt("LAST_SCORE"));
+            highText.gameObject.SetActive(true);
+        }
+        else
+        {
+            highText.gameObject.SetActive(false);
+        }
+
+        highScore.text = "" + PlayerPrefs.GetInt("HIGH_SCORE");
+        
+        newCubes = new List<int> (31);
+        cubes = new List<GameObject> (31);
+        LoadCubes();
+        CheckCubes();
+        refreshNews(true);
+
         for(int i=0;i<cubeTextures.Length;i++)
         {
         	addCube(i);
@@ -72,10 +130,103 @@ public class MainMenuCube : MonoBehaviour
         coins.text = "" + PlayerPrefs.GetInt("bytes", 0);
         hertz.text = "" + PlayerPrefs.GetInt("hertz", 0);
 
-        selected = PlayerPrefs.GetInt("selected", 0);
+
+        
+
+
+        selected = PlayerPrefs.GetInt("selected", 0) + 1;
+
+        for(int i=0;i<MCubes.Count;i++)
+        {
+            if(MCubes[i].textureId == selected)
+            {
+                selected = i;
+                break;
+            }
+        }
+
         cam.transform.position = new Vector3(selected * xOffset, yPos, zPos);
         transitioning = false;
+        refreshTexts();
         buttonState();
+    }
+
+
+    public void CheckCubes()
+    {
+        bool changed = false;
+
+        int respawns = Achievements.getRespawns();
+        if(respawns > 0 && !MCubes[5].available){MCubes[5].available = true; newCubes.Add(5); changed = true;}
+        if(respawns > 10 && !MCubes[6].available){MCubes[6].available = true; newCubes.Add(6); changed = true;}
+        if(respawns > 100 && !MCubes[7].available){MCubes[7].available = true; newCubes.Add(7); changed = true;}
+
+        int ups = Achievements.getUps();
+        if(ups > 0 && !MCubes[8].available){MCubes[8].available = true; newCubes.Add(8); changed = true;}
+        if(ups > 10 && !MCubes[9].available){MCubes[9].available = true; newCubes.Add(9); changed = true;}
+        if(ups > 100 && !MCubes[10].available){MCubes[10].available = true; newCubes.Add(10); changed = true;}
+
+        int deaths = Achievements.getDeaths();
+        if(deaths > 10 && !MCubes[17].available){MCubes[17].available = true; newCubes.Add(17); changed = true;}
+        if(deaths > 100 && !MCubes[18].available){MCubes[18].available = true; newCubes.Add(18); changed = true;}
+        if(deaths > 1000 && !MCubes[19].available){MCubes[19].available = true; newCubes.Add(19); changed = true;}
+
+        int bytes = Achievements.getBytes();
+        if(bytes > 100 && !MCubes[11].available){MCubes[11].available = true; newCubes.Add(11); changed = true;}
+        if(bytes > 1000 && !MCubes[12].available){MCubes[12].available = true; newCubes.Add(12); changed = true;}
+        if(bytes > 10000 && !MCubes[13].available){MCubes[13].available = true; newCubes.Add(13); changed = true;}
+
+        int score = PlayerPrefs.GetInt("HIGH_SCORE");
+        if(score > 100000 && !MCubes[14].available){MCubes[14].available = true; newCubes.Add(14); changed = true;}
+        if(score > 300000 && !MCubes[15].available){MCubes[15].available = true; newCubes.Add(15); changed = true;}
+        if(score > 1000000 && !MCubes[16].available){MCubes[16].available = true; newCubes.Add(16); changed = true;}
+
+        if(changed)SaveCubes();
+    }
+
+
+
+
+    void refreshTexts()
+    {
+
+        topText.text = MCubes[selected].name;
+        if(MCubes[selected].collectible && !MCubes[selected].available)
+        {
+            bottomText.text = MCubes[selected].requirements;
+            costText.text = "";
+            img.SetActive(false);
+        }
+        else if(!MCubes[selected].available)
+        {
+            costText.text = "" + MCubes[selected].cost;
+            img.SetActive(true);
+            if(PlayerPrefs.GetInt("bytes", 0) >= MCubes[selected].cost)
+            {
+                costText.text += "    BUY";
+            }
+            bottomText.text = "";
+        }
+        else
+        {
+            costText.text = "";
+            bottomText.text = "";
+            img.SetActive(false);
+        }
+        
+    }
+
+    public void buyCurrent()
+    {
+        Debug.Log("PRESSSS");
+        int currentBytes = PlayerPrefs.GetInt("bytes", 0);
+        if(currentBytes < MCubes[selected].cost)return;
+        MCubes[selected].available = true;
+        PlayerPrefs.SetInt("bytes", currentBytes - MCubes[selected].cost);
+        coins.text = "" + PlayerPrefs.GetInt("bytes", 0);
+        SaveCubes();
+        buttonState();
+        refreshTexts();
     }
 
     void addCube(int id)
@@ -85,8 +236,7 @@ public class MainMenuCube : MonoBehaviour
         cube.transform.localScale = new Vector3(25, 25, 25);
         cube.transform.SetParent(transform);
         SetTexture.setMaterial(cubeMaterial, cube);
-        SetTexture.setTexture(cubeTextures[id], cube);
-
+        SetTexture.setTexture(cubeTextures[MCubes[id].textureId - 1], cube);
         cubes.Add(cube);
     }
 
@@ -115,6 +265,8 @@ public class MainMenuCube : MonoBehaviour
     	startCamPos = cam.transform.position.x;
     	targetCamPos = selected * xOffset;
     	buttonState();
+        refreshTexts();
+        refreshNews();
     }
 
     public void goRight()
@@ -125,36 +277,62 @@ public class MainMenuCube : MonoBehaviour
     	startCamPos = cam.transform.position.x;
     	targetCamPos = selected * xOffset;
     	buttonState();
+        refreshTexts();
+        refreshNews();
     }
 
     void buttonState()
     {
-    	PlayerPrefs.SetInt("selected", selected);
+        bool av = MCubes[selected].available;
+        StartButton.interactable = av;
+        if(av)
+    	   PlayerPrefs.SetInt("selected", MCubes[selected].textureId - 1);
     	leftButton.interactable = (selected > 0);
     	rightButton.interactable = (selected < cubeTextures.Length - 1);
     }
 
-
-    public static string arrayToString(uint[] arr)
+    public static string getPath()
     {
-        string q = "" + arr[0];
-        for(int i=1;i<arr.Length;i++)
-        {
-            q += "," + arr[i];
-        }
-        return q;
+        return Application.persistentDataPath + "/serialized.json";
     }
 
-    public static uint[] stringToArray(string q)
+    public void LoadCubes()
     {
-        if(q == "")return null;
-
-        string[] qrr = q.Split(',');
-        uint[] arr = new uint[qrr.Length];
-        for(int i=0;i<qrr.Length;i++)
+        string path = getPath();
+        if(!File.Exists(path))
         {
-            arr[i] = UInt32.Parse(qrr[i]);
+            File.WriteAllText(path, DefaultAsset.text);
         }
-        return arr;
+
+        string[] lines = File.ReadAllLines(path);
+        MCubes = new List<MCube>(lines.Length);
+        for(int i=0;i<lines.Length;i++)
+        {
+            //Debug.Log("LINE" + i);
+            MCubes.Add(JsonUtility.FromJson<MCube>(lines[i]));
+        }
     }
+
+    public void SaveCubes()
+    {
+        string[] lines = new string[MCubes.Count];
+        for(int i=0;i<MCubes.Count;i++)
+        {
+            lines[i] = JsonUtility.ToJson(MCubes[i]);
+        }
+        File.WriteAllLines(getPath(), lines);
+    }
+
+    [Serializable]
+    public class MCube
+    {
+        public string name;
+        public bool available;
+        public bool collectible;
+        public int cost;
+        public string requirements;
+        public int textureId;
+    }
+
+
 }

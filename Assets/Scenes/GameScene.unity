@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 112000000, guid: 8f025549c3fb64845bd29b505b826308,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2771,6 +2771,16 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 4eef2cb78fe3ac24c94c985c768635ea, type: 3}
   - {fileID: 2800000, guid: bbfcd3372b951b749a315687e0102c0b, type: 3}
   - {fileID: 2800000, guid: 2658ecee799b6114da9f94f2d05444b3, type: 3}
+  - {fileID: 2800000, guid: 324374d42e915fc4a91da86472d9733f, type: 3}
+  - {fileID: 2800000, guid: b38606b15f4e20b4cae3a003f8e7e186, type: 3}
+  - {fileID: 2800000, guid: eb40dd2e3f56f1640bf4ea44630d1842, type: 3}
+  - {fileID: 2800000, guid: 4e2b8cda1cbf7c648890f032579f947d, type: 3}
+  - {fileID: 2800000, guid: dfcd3c35427c1a148b709754d4e67d19, type: 3}
+  - {fileID: 2800000, guid: 4201fc94f4c1c03459f7f1b74ddc65ce, type: 3}
+  - {fileID: 2800000, guid: 923bfce1815ac0e4297467c77936d31b, type: 3}
+  - {fileID: 2800000, guid: c08a5b38702c4984e8c0da66534603a0, type: 3}
+  - {fileID: 2800000, guid: e9763c8ecbc4f5d4fa532999c15142d3, type: 3}
+  - {fileID: 2800000, guid: 7fcebfa362c9e18418f3e6771bae7fee, type: 3}
 --- !u!114 &1942246941
 MonoBehaviour:
   m_ObjectHideFlags: 0

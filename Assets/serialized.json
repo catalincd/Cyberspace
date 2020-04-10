@@ -1,0 +1,20 @@
+{"name":"Astrocube","available":true,"collectible":false,"cost":0,"requirements":"","textureId":1}
+{"name":"Clubs","available":false,"collectible":false,"cost":10,"requirements":"","textureId":17}
+{"name":"Lucky7","available":false,"collectible":false,"cost":50,"requirements":"","textureId":18}
+{"name":"Yin Yang","available":false,"collectible":false,"cost":100,"requirements":"","textureId":19}
+{"name":"Radioactive","available":false,"collectible":false,"cost":500,"requirements":"","textureId":20}
+{"name":"Beyond Life","available":false,"collectible":true,"cost":0,"requirements":"Use a Hertz to Respawn","textureId":9}
+{"name":"Immortal","available":false,"collectible":true,"cost":0,"requirements":"Respawn 10 times","textureId":7}
+{"name":"Redemption","available":false,"collectible":true,"cost":0,"requirements":"Repsawn 100 times","textureId":4}
+{"name":"Fly butterfly","available":false,"collectible":true,"cost":0,"requirements":"Collect a Trig","textureId":8}
+{"name":"Lightning Fast","available":false,"collectible":true,"cost":0,"requirements":"Collect 10 Trigs","textureId":10}
+{"name":"HIGHEST IN THE ROOM","available":false,"collectible":true,"cost":0,"requirements":"Collect 100 Trigs","textureId":11}
+{"name":"Lit","available":false,"collectible":true,"cost":0,"requirements":"Collect 100 Bytes","textureId":5}
+{"name":"Collector","available":false,"collectible":true,"cost":0,"requirements":"Collect 1000 Bytes","textureId":6}
+{"name":"Matrix","available":false,"collectible":true,"cost":0,"requirements":"Collect 10000 Bytes","textureId":13}
+{"name":"Tryhard","available":false,"collectible":true,"cost":0,"requirements":"Reach 100 000 Score","textureId":3}
+{"name":"Redline","available":false,"collectible":true,"cost":0,"requirements":"Reach 300 000 Score","textureId":2}
+{"name":"Megacube","available":false,"collectible":true,"cost":0,"requirements":"Reach 1 000 000 Score","textureId":15}
+{"name":"Cruel Fate","available":false,"collectible":true,"cost":0,"requirements":"Die 10 times","textureId":12}
+{"name":"Living Death","available":false,"collectible":true,"cost":0,"requirements":"Die 100 times","textureId":14}
+{"name":"1000 Bad Times","available":false,"collectible":true,"cost":0,"requirements":"Die 1000 times","textureId":16}
