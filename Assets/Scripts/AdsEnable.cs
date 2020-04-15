@@ -7,12 +7,12 @@ public class AdsEnable : MonoBehaviour
 {
 
 	public TextMeshProUGUI text;
-	bool enabled = false;
+	bool isEnabled = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        enabled = !(PlayerPrefs.GetInt("ADS", 1) > 0);
+        isEnabled = !(PlayerPrefs.GetInt("ADS", 1) > 0);
         Switch();
     }
 
@@ -24,9 +24,9 @@ public class AdsEnable : MonoBehaviour
 
     public void Switch()
     {
-    	enabled = !enabled;
+    	isEnabled = !isEnabled;
 
-    	if(enabled)
+    	if(isEnabled)
     	{
     		text.text = "ADS: ENABLED";
     		PlayerPrefs.SetInt("ADS", 1);

@@ -6,15 +6,23 @@ using UnityEngine.Events;
 public class Collision : MonoBehaviour
 {
 
+    
+
+    [Header("Materials")]
     public MaterialManager material;
 	public ScoreManager score;
     public Cube cube;
     Blinker blinker;
     int i = 0;
     // Start is called before the first frame update
+
+    AudioPlayer player;
+
+
     void Start()
     {
         blinker = GetComponent<Blinker>();
+        player = GetComponent<AudioPlayer>();
     }
 
     // Update is called once per frame
@@ -29,6 +37,7 @@ public class Collision : MonoBehaviour
         //Debug.Log(gOther.tag);
         if(gOther.tag == "P")
         {
+            player.playCoin();
             blinker.blink();
         	Destroy(gOther);
         	score.increment();
@@ -37,6 +46,7 @@ public class Collision : MonoBehaviour
         else
         if(gOther.tag == "B")
         {
+            player.playHertz();
             blinker.blinkCyan();
             Destroy(gOther);
             score.incrementHertz();
@@ -64,6 +74,7 @@ public class Collision : MonoBehaviour
             {
                 material.startRed();
                 cube.startRed();
+                player.playTrig();
             }
             else
                 score.incrementMult();
@@ -76,6 +87,7 @@ public class Collision : MonoBehaviour
             {
                 material.startGreen();
                 cube.startRed();
+                player.playTrig();
             }
             else
                 score.incrementMult();
@@ -87,7 +99,8 @@ public class Collision : MonoBehaviour
             if(!cube.powerUp)
             {
                 material.startBlue();
-                cube.startRed();
+                cube.startBlue();
+                player.playTrig();
             }
             else
                 score.incrementMult();

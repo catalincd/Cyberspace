@@ -10,7 +10,7 @@ public class GreenManager : MonoBehaviour
 	public float YPosDown = 0.75f;
     public float YPosUp = 1.75f;
 	public float YPosTop = 1.75f;
-    public GameObject cylinder;
+    public GameObject[] cylinders;
     public GameObject cylinderP;
 	public GameObject trig;
 	public GameObject cam;
@@ -84,7 +84,7 @@ public class GreenManager : MonoBehaviour
 
         if(down)
         {
-            GameObject tile = Instantiate(cylinder) as GameObject; 
+            GameObject tile = Instantiate(randCylinder()) as GameObject; 
             tile.transform.SetParent(transform);    
             tile.transform.position = (new Vector3(Mathf.Floor(lastAdded), YPosDown, 0));
             spawned.Add(tile);
@@ -100,7 +100,7 @@ public class GreenManager : MonoBehaviour
 
         if(top)
         {
-            GameObject tile3 = Instantiate(cylinder) as GameObject; 
+            GameObject tile3 = Instantiate(randCylinder()) as GameObject; 
             tile3.transform.SetParent(transform);    
             tile3.transform.position = (new Vector3(Mathf.Floor(lastAdded), YPosTop, 0));
             spawned.Add(tile3);
@@ -116,6 +116,12 @@ public class GreenManager : MonoBehaviour
             Destroy(spawned[i]);
         spawned.Clear();
         spawned = new List<GameObject>(300);
+    }
+
+    GameObject randCylinder()
+    {
+        //return cylinders[Random.Range(0, cylinders.Length)];
+        return cylinders[1];
     }
 
 }

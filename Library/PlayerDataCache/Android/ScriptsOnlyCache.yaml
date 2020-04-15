@@ -6,9 +6,12 @@ ScriptsOnlyBuild:
     - Achievements
     - AdManager
     - AdReq
+    - AdsEnable
+    - AdsInGame
     - AnisotropicSet
     - AntiAliasingSet
     - AppSet
+    - AudioPlayer
     - BackButton
     - Blinker
     - Bouncer
@@ -22,6 +25,7 @@ ScriptsOnlyBuild:
     - GreenManager
     - MainMenuCube
     - MaterialManager
+    - MusicPlayer
     - OverlayManager
     - PauseManager
     - PowerupManager
@@ -37,10 +41,12 @@ ScriptsOnlyBuild:
     - TouchController
     - Translation
     - TranslationY
+    - UISoundPlayer
     Unity.RenderPipelines.Lightweight.Runtime.dll:
     - UnityEngine.Rendering.LWRP.ForwardRendererData
     - UnityEngine.Rendering.LWRP.LWRPAdditionalCameraData
     - UnityEngine.Rendering.LWRP.LightweightRenderPipelineAsset
+    - UnityEngine.Rendering.LWRP.LightweightRenderPipelineEditorResources
     Unity.TextMeshPro.dll:
     - TMPro.TMP_FontAsset
     - TMPro.TMP_Settings
@@ -86,6 +92,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 89
       Script: {instanceID: 0}
     - Class: 104
@@ -97,57 +107,59 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10302}
     - Class: 114
-      Script: {instanceID: 10382}
+      Script: {instanceID: 10384}
     - Class: 114
-      Script: {instanceID: 10684}
+      Script: {instanceID: 10686}
     - Class: 114
-      Script: {instanceID: 10752}
+      Script: {instanceID: 10754}
     - Class: 114
-      Script: {instanceID: 10800}
+      Script: {instanceID: 10802}
     - Class: 114
-      Script: {instanceID: 10810}
+      Script: {instanceID: 10812}
     - Class: 114
-      Script: {instanceID: 10896}
+      Script: {instanceID: 10898}
     - Class: 114
-      Script: {instanceID: 11118}
+      Script: {instanceID: 11122}
     - Class: 114
-      Script: {instanceID: 11126}
+      Script: {instanceID: 11130}
     - Class: 114
-      Script: {instanceID: 11168}
+      Script: {instanceID: 11172}
     - Class: 114
-      Script: {instanceID: 11396}
+      Script: {instanceID: 11404}
     - Class: 114
-      Script: {instanceID: 11514}
+      Script: {instanceID: 11522}
     - Class: 114
-      Script: {instanceID: 11784}
+      Script: {instanceID: 11794}
     - Class: 114
-      Script: {instanceID: 11872}
+      Script: {instanceID: 11884}
     - Class: 114
-      Script: {instanceID: 12024}
+      Script: {instanceID: 12036}
     - Class: 114
-      Script: {instanceID: 12116}
+      Script: {instanceID: 12128}
     - Class: 114
-      Script: {instanceID: 12224}
+      Script: {instanceID: 12236}
     - Class: 114
-      Script: {instanceID: 12240}
+      Script: {instanceID: 12252}
     - Class: 114
-      Script: {instanceID: 12360}
+      Script: {instanceID: 12372}
     - Class: 114
-      Script: {instanceID: 12434}
+      Script: {instanceID: 12446}
     - Class: 114
-      Script: {instanceID: 12532}
+      Script: {instanceID: 12544}
     - Class: 114
-      Script: {instanceID: 12590}
+      Script: {instanceID: 12604}
     - Class: 114
-      Script: {instanceID: 12702}
+      Script: {instanceID: 12716}
     - Class: 114
-      Script: {instanceID: 13206}
+      Script: {instanceID: 13220}
     - Class: 114
-      Script: {instanceID: 13226}
+      Script: {instanceID: 13240}
     - Class: 114
-      Script: {instanceID: 13228}
+      Script: {instanceID: 13242}
     - Class: 114
-      Script: {instanceID: 13382}
+      Script: {instanceID: 13390}
+    - Class: 114
+      Script: {instanceID: 13398}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -193,6 +205,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
@@ -204,45 +220,49 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10302}
     - Class: 114
-      Script: {instanceID: 10382}
+      Script: {instanceID: 10384}
     - Class: 114
-      Script: {instanceID: 10800}
+      Script: {instanceID: 10802}
     - Class: 114
-      Script: {instanceID: 10950}
+      Script: {instanceID: 10952}
     - Class: 114
       Script: {instanceID: 11086}
     - Class: 114
-      Script: {instanceID: 11118}
+      Script: {instanceID: 11090}
     - Class: 114
-      Script: {instanceID: 11170}
+      Script: {instanceID: 11122}
     - Class: 114
-      Script: {instanceID: 11814}
+      Script: {instanceID: 11174}
     - Class: 114
-      Script: {instanceID: 11872}
+      Script: {instanceID: 11356}
     - Class: 114
-      Script: {instanceID: 11916}
+      Script: {instanceID: 11606}
     - Class: 114
-      Script: {instanceID: 12240}
+      Script: {instanceID: 11824}
     - Class: 114
-      Script: {instanceID: 12260}
+      Script: {instanceID: 11884}
     - Class: 114
-      Script: {instanceID: 12462}
+      Script: {instanceID: 11928}
     - Class: 114
-      Script: {instanceID: 12590}
+      Script: {instanceID: 12252}
     - Class: 114
-      Script: {instanceID: 12702}
+      Script: {instanceID: 12272}
     - Class: 114
-      Script: {instanceID: 13000}
+      Script: {instanceID: 12474}
     - Class: 114
-      Script: {instanceID: 13174}
+      Script: {instanceID: 12604}
     - Class: 114
-      Script: {instanceID: 13294}
+      Script: {instanceID: 12716}
     - Class: 114
-      Script: {instanceID: 13306}
+      Script: {instanceID: 13014}
     - Class: 114
-      Script: {instanceID: 13382}
+      Script: {instanceID: 13188}
     - Class: 114
-      Script: {instanceID: 16914}
+      Script: {instanceID: 13308}
+    - Class: 114
+      Script: {instanceID: 13320}
+    - Class: 114
+      Script: {instanceID: 13398}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -279,39 +299,43 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9980}
     - Class: 114
-      Script: {instanceID: 10382}
+      Script: {instanceID: 10384}
     - Class: 114
-      Script: {instanceID: 10724}
+      Script: {instanceID: 10726}
     - Class: 114
-      Script: {instanceID: 10800}
+      Script: {instanceID: 10802}
     - Class: 114
-      Script: {instanceID: 10892}
+      Script: {instanceID: 10894}
     - Class: 114
-      Script: {instanceID: 11118}
+      Script: {instanceID: 11122}
     - Class: 114
-      Script: {instanceID: 11338}
+      Script: {instanceID: 11342}
     - Class: 114
-      Script: {instanceID: 11872}
+      Script: {instanceID: 11354}
     - Class: 114
-      Script: {instanceID: 11974}
+      Script: {instanceID: 11828}
     - Class: 114
-      Script: {instanceID: 12240}
+      Script: {instanceID: 11884}
     - Class: 114
-      Script: {instanceID: 12350}
+      Script: {instanceID: 11986}
     - Class: 114
-      Script: {instanceID: 12462}
+      Script: {instanceID: 12252}
     - Class: 114
-      Script: {instanceID: 12590}
+      Script: {instanceID: 12362}
     - Class: 114
-      Script: {instanceID: 12702}
+      Script: {instanceID: 12474}
     - Class: 114
-      Script: {instanceID: 12884}
+      Script: {instanceID: 12584}
     - Class: 114
-      Script: {instanceID: 13112}
+      Script: {instanceID: 12604}
     - Class: 114
-      Script: {instanceID: 13382}
+      Script: {instanceID: 12716}
     - Class: 114
-      Script: {instanceID: 20886}
+      Script: {instanceID: 12898}
+    - Class: 114
+      Script: {instanceID: 13126}
+    - Class: 114
+      Script: {instanceID: 13398}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -555,7 +579,7 @@ ScriptsOnlyBuild:
     className: StaticBlink
   - hash:
       serializedVersion: 2
-      Hash: 14ab0b49fcaa6866b9f1793712530fc3
+      Hash: d7804fe948aff0c15489388c5b1b3a93
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Cube
@@ -619,6 +643,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Shadow
+  - hash:
+      serializedVersion: 2
+      Hash: 2cce40013e8a22ee058304d44238e263
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: UISoundPlayer
   - hash:
       serializedVersion: 2
       Hash: 828a3edebb79e85b736650cdc7e4183d
@@ -687,7 +717,19 @@ ScriptsOnlyBuild:
     className: LightweightRenderPipelineAsset
   - hash:
       serializedVersion: 2
-      Hash: 36061140252c672b60dc9a071090f661
+      Hash: ee98729079998eb63435f99f41b30b9e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Stats
+  - hash:
+      serializedVersion: 2
+      Hash: 2cce40013e8a22ee058304d44238e263
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MusicPlayer
+  - hash:
+      serializedVersion: 2
+      Hash: f0f0867ecf4698e98efff521a5ab7243
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GreenManager
@@ -721,6 +763,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalTrack
+  - hash:
+      serializedVersion: 2
+      Hash: b54c5e100ac5fd1e1c873f59762ff6a0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Bouncer
   - hash:
       serializedVersion: 2
       Hash: d6fc8d3165070298511ec776ea575626
@@ -757,6 +805,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp-Editor.dll
     namespaceName: GoogleMobileAds.Editor
     className: GoogleMobileAdsSettings
+  - hash:
+      serializedVersion: 2
+      Hash: ee98729079998eb63435f99f41b30b9e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AdsInGame
   - hash:
       serializedVersion: 2
       Hash: 50c443b12ccc0b475183318b5088bcc5
@@ -903,13 +957,13 @@ ScriptsOnlyBuild:
     className: PixelPerfectCamera
   - hash:
       serializedVersion: 2
-      Hash: d0adc65b6f54d204e5a5dc174eb9a803
+      Hash: bcb8b1f33c60c0c19ec4d44c4ecbe9c7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PauseManager
   - hash:
       serializedVersion: 2
-      Hash: b12520b19d0d78fb2a9350b575a5ffa1
+      Hash: a5c964297814aff555fd36a2ff9835d6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SceneManagerObject
@@ -937,6 +991,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Collision
+  - hash:
+      serializedVersion: 2
+      Hash: ee98729079998eb63435f99f41b30b9e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AdsEnable
   - hash:
       serializedVersion: 2
       Hash: 3b760e6526e13f7504f59e210145899a
@@ -999,7 +1059,7 @@ ScriptsOnlyBuild:
     className: PostProcessVolume
   - hash:
       serializedVersion: 2
-      Hash: a91081c226745b26b7115a31481a363b
+      Hash: a7a436193aff8a364817c07e56a9c3fa
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MainMenuCube
@@ -1107,6 +1167,12 @@ ScriptsOnlyBuild:
     className: CubeRuntime
   - hash:
       serializedVersion: 2
+      Hash: a520acb9dbfcdb885a62b0b9888e494d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AudioPlayer
+  - hash:
+      serializedVersion: 2
       Hash: 748dd2a2a28da4e618912da5ac45684b
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
@@ -1155,25 +1221,13 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: b54c5e100ac5fd1e1c873f59762ff6a0
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Bouncer
-  - hash:
-      serializedVersion: 2
       Hash: ee98729079998eb63435f99f41b30b9e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: AdsEnable
-  - hash:
-      serializedVersion: 2
-      Hash: ee98729079998eb63435f99f41b30b9e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Stats
+    className: SoundButton
   platform: 13
   scenePathNames:
   - Assets/Scenes/MainMenuScene.unity
   - Assets/Scenes/GameScene.unity
   - Assets/Scenes/SettingsScene.unity
-  playerPath: C:/Users/KTA/Desktop/Cyberspace v0.29.apk
+  playerPath: C:/Users/KTA/Desktop/Cyberspace v0.31.apk

@@ -12,6 +12,8 @@ public class AdManager : MonoBehaviour
 
     public void Start()
     {
+        Data.adHeight = 0.0f;
+
         #if UNITY_ANDROID
             string appId = "ca-app-pub-3940256099942544~3347511713";
         #elif UNITY_IPHONE
@@ -35,6 +37,18 @@ public class AdManager : MonoBehaviour
 
     private void RequestBanner()
     {
+        if(PlayerPrefs.GetInt("ADS", 1) == 0)
+        {
+            bannerView = null;
+            HideBanner();
+             return;
+        }
+
+        if(bannerView != null)
+        {
+            bannerView.Destroy();
+        }
+
         #if UNITY_ANDROID
             string adUnitId = "ca-app-pub-3940256099942544/6300978111";
         #elif UNITY_IPHONE
@@ -48,7 +62,12 @@ public class AdManager : MonoBehaviour
 
         debugText.text = "Created";
 
-        this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+        //MODIFY AD SIZE
+
+        AdSize adaptiveSize = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
+        Data.adHeight = bannerView.GetHeightInPixels();
+
+        this.bannerView = new BannerView(adUnitId, adaptiveSize, AdPosition.Bottom);
 
         this.bannerView.OnAdLoaded += this.HandleOnAdLoaded;
         this.bannerView.OnAdFailedToLoad += this.HandleOnAdFailedToLoad;
@@ -58,8 +77,10 @@ public class AdManager : MonoBehaviour
         AdRequest request = new AdRequest.Builder().Build();
 		debugText.text = "CreatedReq";
         this.bannerView.LoadAd(request);
+        this.bannerView.Hide();
 		debugText.text = "Requested";
     }
+
 
     public void ShowBanner()
     {
@@ -70,8 +91,11 @@ public class AdManager : MonoBehaviour
 
     public void HideBanner()
     {
-    	this.bannerView.Hide();
-    	RequestBanner();
+        if(this.bannerView != null)
+    	{
+           this.bannerView.Hide();
+           RequestBanner();
+        }
     }
 
     public void HandleOnAdLoaded(object sender, EventArgs args)

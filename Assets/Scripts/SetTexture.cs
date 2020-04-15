@@ -14,10 +14,14 @@ public class SetTexture : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Texture map = maps[PlayerPrefs.GetInt("selected")];
-        mat = objectx.GetComponent<Renderer>().material;
-        mat.SetTexture("_BaseMap", map);
-        mat.SetTexture("_EmissionMap", map);
+        //Texture map = maps[PlayerPrefs.GetInt("selected")];
+        if(Data.playerTexture != null)
+        {
+            Texture map = Data.playerTexture;
+            mat = objectx.GetComponent<Renderer>().material;
+            mat.SetTexture("_BaseMap", map);
+            mat.SetTexture("_EmissionMap", map);
+        }
     }
 
     void setTexture(Texture newTexture)

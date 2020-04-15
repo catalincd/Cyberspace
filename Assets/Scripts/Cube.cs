@@ -20,6 +20,7 @@ public class Cube : MonoBehaviour
     public TileManager manager;
     public OverlayManager overlay;
     public ScoreManager scoreManager;
+    public AudioPlayer player;
    
    	[Header("Events")]
    	public UnityEvent onTrig;
@@ -30,9 +31,24 @@ public class Cube : MonoBehaviour
    	public float idleDuration = 1.5f;
    	public float forwardRoute = 15.0f;
    	public bool m_lockWhilePowerUp = false;
+   	public float camRotations = 7.0f;
+   	public float camRotationDuration = 6.0f;
+   	public float zoomInScale = 0.35f;
+   	public float camZoomInDuration = 6.0f;
+   	public AnimationCurve zoomInCam = new AnimationCurve(new Keyframe(0.0f, 0.0f), new Keyframe(0.15f, 1.0f), new Keyframe(0.85f, 1.0f), new Keyframe(1.0f, 0.0f));
+   	private float camZoomInBias = 0.0f;
+   	private float camRotationBias = 0.0f;
+   	private float targetRotationAngle;
+   	private Quaternion defaultCamRotation;
+   	public Vector3 defaultCamOffset = Vector3.zero;
+   	public Vector3 defaultCamRotationV3 = Vector3.zero;
    	bool upSent = false;
 
     [Header("Runtime")]
+    public float introDuration = 1.5f;
+    public float initialCamLateralOffset = 4.8f;
+    public float initialCamYPos = 3.5f;
+    public float initialCamXPos = -1.5f;
     public bool godMode = false;
     public float speed = 7.0f;
     public float targetSpeed = 9.0f;
@@ -66,7 +82,7 @@ public class Cube : MonoBehaviour
 
     float movementFactor = 1.0f;
     bool stopped = false;
-    bool gameOver = false;
+    public bool gameOver = false;
     bool respawned = false;
 
     Quaternion currentRot;
@@ -87,6 +103,11 @@ public class Cube : MonoBehaviour
     bool greenUp = false;
     bool blueUp = false;
     bool noControls = false;
+
+    bool isIntro = true;
+    float introBias = 0.0f;
+    Vector3 initCamOffset;
+    Quaternion initCamRotation;
 
 
 	[Header("Score")]
@@ -120,6 +141,7 @@ public class Cube : MonoBehaviour
     float imageBias = 0.0f;
     float jumpBias = 0.0f;
     float jumpFactor = 1.0f;
+    
     Vector3 camOffset = Vector3.zero;
     float cameraShakeBias = 0.0f;
     bool animateImage = false;
@@ -149,10 +171,18 @@ public class Cube : MonoBehaviour
     	greenUp = false;
     	blueUp = false;
 
-        if(autoAdjustCam)
-        {
-            camOffset = cam.transform.position - transform.position;
-        }  
+    	
+    	defaultCamRotation = Quaternion.Euler(defaultCamRotationV3);
+        
+
+        float sSign = Mathf.Sign(Random.value - 0.5f);
+
+        cam.transform.position = new Vector3(initialCamXPos, initialCamYPos, sSign * initialCamLateralOffset);
+        cam.transform.rotation = Quaternion.Euler(defaultCamRotationV3.x, defaultCamRotationV3.y, -90.0f * sSign);
+
+        camOffset = cam.transform.position - transform.position;
+        initCamOffset = camOffset;
+        initCamRotation = cam.transform.rotation;
 
        // yCamPos = 
 
@@ -271,6 +301,8 @@ public class Cube : MonoBehaviour
 		    }
 
 
+
+
 	        //move
             float thisSpeed = Mathf.Lerp(speed, targetSpeed, speedBias);
 	        //Debug.Log("" + thisSpeed);
@@ -310,8 +342,28 @@ public class Cube : MonoBehaviour
                 endGame();	
         	}
 
+        	 if(isIntro)
+		    	updateIntro();
+
         	if(redUp)
-        		enroute();
+        	{
+        		zoomCam();
+	        	if(blueUp)
+	        	{
+	        		enroute();
+	        		rotateCam();
+	        	}
+	        	else if(greenUp)
+	        	{
+	        		enroute();
+	        		//green
+	        	}
+	        	else
+	        	{
+	        		enroute();
+	        		//red
+	        	}
+        	}
 
         }
         else
@@ -326,6 +378,58 @@ public class Cube : MonoBehaviour
         		cam.transform.position = finalCamPos + offset;
         	}
         }
+    }
+
+    public void updateIntro()
+    {
+    	introBias += Time.deltaTime / introDuration;
+
+    	camOffset = Vector3.Lerp(initCamOffset, defaultCamOffset, introBias);
+    	cam.transform.rotation = Quaternion.Lerp(initCamRotation, defaultCamRotation, introBias);
+
+    	if(introBias >= 1.0f)
+    	{
+    		isIntro = false;
+    		camOffset = defaultCamOffset;
+    		cam.transform.rotation = defaultCamRotation;
+    	}
+    }
+
+    public void zoomCam()
+    {
+    	camZoomInBias += Time.deltaTime / camZoomInDuration;
+    	
+
+    	if(camZoomInBias >= 1.0f)
+    	{
+    		camOffset = defaultCamOffset;
+    	}
+    	else
+    	{
+    		float currentZoomBias = 1.0f + (zoomInCam.Evaluate(camZoomInBias) * zoomInScale);
+    		camOffset = defaultCamOffset * currentZoomBias;
+    	}
+
+    }
+
+    public void rotateCam()
+    {
+    	camRotationBias += Time.deltaTime / camRotationDuration;
+
+    	if(camRotationBias >= 1.0f)
+    	{
+    		cam.transform.rotation = defaultCamRotation;
+    		camRotationBias = 0.0f;
+    		blueUp = false;
+    	}
+    	else
+    	{
+    		float currentBias = zoomInCam.Evaluate(camRotationBias);
+    		Vector3 angles = cam.transform.rotation.eulerAngles;
+    		Quaternion targetQuat = Quaternion.Euler(angles.x, angles.y, targetRotationAngle * currentBias);
+    		cam.transform.rotation = targetQuat;
+    	}
+
     }
 
     public void enroute()
@@ -359,8 +463,29 @@ public class Cube : MonoBehaviour
     {
     	if(!powerUp && !gameOver)
     	{
+    		camZoomInBias = 0.0f;
+    	    camRotationBias = 0.0f;
             Achievements.incUps();
     		redUp = true;
+    		powerUp = true;
+    		noControls = true;
+    		onTrig.Invoke();
+    		movementFactor = redMovementFactor;
+    		blinker.startHalf();
+    		StartCoroutine(disableUp());
+    	}
+    }
+
+    public void startBlue()
+    {
+    	if(!powerUp && !gameOver)
+    	{
+    		targetRotationAngle = 180.0f * Mathf.Sign(Random.value - 0.5f);
+    		camRotationBias = 0.0f;
+    		camZoomInBias = 0.0f;
+            Achievements.incUps();
+    		redUp = true;
+    		blueUp = true;
     		powerUp = true;
     		noControls = true;
     		onTrig.Invoke();
@@ -636,6 +761,7 @@ public class Cube : MonoBehaviour
         movementFactor = 0.0f;
         finalCamPos = cam.transform.position;
         blinker.dissolveColor();
+        player.playExplosion();
         
         StartCoroutine(StartFading());
         

@@ -24,9 +24,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8893504433587154275}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Vertical
-  m_TagString: Untagged
+  m_TagString: CP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 8893504434605474845}
   - component: {fileID: 8893504434605474844}
   - component: {fileID: 8893504434605474847}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CubeV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,6 +151,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cylinder
       objectReference: {fileID: 0}
+    - target: {fileID: 5754424872684523765, guid: 634a5611ca5d9f346869dcb615e8ba22,
+        type: 3}
+      propertyPath: m_TagString
+      value: CP
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878087050645364538, guid: 634a5611ca5d9f346869dcb615e8ba22,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878087050645364538, guid: 634a5611ca5d9f346869dcb615e8ba22,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 95abf7a18470ee643b89d27f117625f4,
+        type: 2}
     - target: {fileID: 8755150740065772262, guid: 634a5611ca5d9f346869dcb615e8ba22,
         type: 3}
       propertyPath: m_LocalPosition.x

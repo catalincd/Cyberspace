@@ -1,9 +1,13 @@
-v0.29 [Alpha Testing]
+v0.30 [Alpha Testing]
 
--New Test AdRequest
--New Extra Items
--New 10 Cubes
--New Missions
--New HighScore system
 
+-New 6 Cubes
+-New better ads control
+-Bug fixes for loading cubes
+-Skybox
+-OMG CREDITS
+
+
+TO-DO: New encounters
+TO-DO: Sounds for every queue
 TO-DO: 20 000 bytes to disable ads

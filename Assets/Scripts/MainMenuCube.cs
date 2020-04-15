@@ -13,6 +13,7 @@ public class MainMenuCube : MonoBehaviour
     public Text hertz;
     public Text highScore;
     public Text highText;
+    public UISoundPlayer sound;
 
     public TextAsset DefaultAsset;
 
@@ -25,6 +26,7 @@ public class MainMenuCube : MonoBehaviour
 
 	public GameObject cam;
 	public GameObject cubeToInstatiate;
+	public int maxId = 20;
     public Texture[] cubeTextures;
     public Material cubeMaterial;
     public float xOffset = 2.0f;
@@ -46,6 +48,8 @@ public class MainMenuCube : MonoBehaviour
 	float targetCamPos = 2.0f;	
 	float camBias = 0.0f;
 	bool transitioning = false;
+	bool changed = false;
+	int linesNum = 0;
 
 	float yPos;
 	float zPos;
@@ -113,13 +117,17 @@ public class MainMenuCube : MonoBehaviour
 
         highScore.text = "" + PlayerPrefs.GetInt("HIGH_SCORE");
         
-        newCubes = new List<int> (31);
-        cubes = new List<GameObject> (31);
+
+        linesNum = DefaultAsset.text.Split('\n').Length;
+
+        newCubes = new List<int> (50);
+        cubes = new List<GameObject> (50);
+        changed = false;
         LoadCubes();
         CheckCubes();
         refreshNews(true);
 
-        for(int i=0;i<cubeTextures.Length;i++)
+        for(int i=0;i<maxId;i++)
         {
         	addCube(i);
         }
@@ -149,12 +157,14 @@ public class MainMenuCube : MonoBehaviour
         transitioning = false;
         refreshTexts();
         buttonState();
+
+        AudioListener.volume = PlayerPrefs.GetInt("SOUND");
     }
 
 
     public void CheckCubes()
     {
-        bool changed = false;
+        
 
         int respawns = Achievements.getRespawns();
         if(respawns > 0 && !MCubes[5].available){MCubes[5].available = true; newCubes.Add(5); changed = true;}
@@ -180,6 +190,7 @@ public class MainMenuCube : MonoBehaviour
         if(score > 100000 && !MCubes[14].available){MCubes[14].available = true; newCubes.Add(14); changed = true;}
         if(score > 300000 && !MCubes[15].available){MCubes[15].available = true; newCubes.Add(15); changed = true;}
         if(score > 1000000 && !MCubes[16].available){MCubes[16].available = true; newCubes.Add(16); changed = true;}
+        if(score > 1500000 && !MCubes[20].available){MCubes[20].available = true; newCubes.Add(20); changed = true;}
 
         if(changed)SaveCubes();
     }
@@ -259,6 +270,7 @@ public class MainMenuCube : MonoBehaviour
 
     public void goLeft()
     {
+        sound.playClip();
     	selected--;
     	camBias = 0.0f;
     	transitioning = true;
@@ -271,6 +283,7 @@ public class MainMenuCube : MonoBehaviour
 
     public void goRight()
     {
+        sound.playClip();
     	selected++;
     	camBias = 0.0f;
     	transitioning = true;
@@ -286,9 +299,12 @@ public class MainMenuCube : MonoBehaviour
         bool av = MCubes[selected].available;
         StartButton.interactable = av;
         if(av)
-    	   PlayerPrefs.SetInt("selected", MCubes[selected].textureId - 1);
+    	{
+    		PlayerPrefs.SetInt("selected", MCubes[selected].textureId - 1);
+    		Data.playerTexture = cubeTextures[MCubes[selected].textureId - 1];
+    	}
     	leftButton.interactable = (selected > 0);
-    	rightButton.interactable = (selected < cubeTextures.Length - 1);
+    	rightButton.interactable = (selected < maxId - 1);
     }
 
     public static string getPath()
@@ -306,11 +322,32 @@ public class MainMenuCube : MonoBehaviour
 
         string[] lines = File.ReadAllLines(path);
         MCubes = new List<MCube>(lines.Length);
-        for(int i=0;i<lines.Length;i++)
+        
+
+        if(lines.Length != linesNum)
         {
-            //Debug.Log("LINE" + i);
-            MCubes.Add(JsonUtility.FromJson<MCube>(lines[i]));
+        	Debug.Log("linesNum: " + linesNum + " lines: "+lines.Length);
+        	changed = true;
+        	string[] newLines = DefaultAsset.text.Split('\n');
+
+        	for(int i = 0;i < linesNum;i++)
+        	{
+        		MCubes.Add(JsonUtility.FromJson<MCube>(newLines[i]));
+        	}
+
+        	for(int i=0;i<lines.Length;i++)
+	        {
+	        	MCube current = JsonUtility.FromJson<MCube>(lines[i]);
+                if(MCubes[i] != null && current != null)
+	                MCubes[i].available = current.available;
+                //Debug.Log("DONE:" + i);
+	        }
         }
+        else
+	        for(int i=0;i<lines.Length;i++)
+	        {
+	            MCubes.Add(JsonUtility.FromJson<MCube>(lines[i]));
+	        }
     }
 
     public void SaveCubes()
