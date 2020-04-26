@@ -351,7 +351,7 @@ public class Cube : MonoBehaviour
 	        	if(blueUp)
 	        	{
 	        		enroute();
-	        		rotateCam();
+	        		//rotateCam();
 	        	}
 	        	else if(greenUp)
 	        	{
@@ -511,6 +511,7 @@ public class Cube : MonoBehaviour
     	redUp = false;
     	greenUp = false;
     	blueUp = false;
+        blockMaterial.reset();
     }
 
     IEnumerator StartFading()
@@ -601,7 +602,7 @@ public class Cube : MonoBehaviour
     	greenUp = false;
     	blueUp = false;
 
-    	blockMaterial.reset();
+    	
     }
 
     void clearAngles()

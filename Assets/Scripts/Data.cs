@@ -5,5 +5,5 @@ using UnityEngine;
 public static class Data
 {
     public static Texture playerTexture;
-    public static float adHeight;
+    public static float adHeight = 0.0f;
 }

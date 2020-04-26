@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 112000000, guid: 8f025549c3fb64845bd29b505b826308,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2176,8 +2176,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1266073980}
-  - component: {fileID: 1266073979}
   - component: {fileID: 1266073981}
+  - component: {fileID: 1266073982}
+  - component: {fileID: 1266073979}
   m_Layer: 0
   m_Name: GameFlow
   m_TagString: Untagged
@@ -2194,10 +2195,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1266073978}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83cf0b7e7b8aa9f4ebc18b4e41793dd7, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e8c2ae023cd1054ca9f73fde82bcc70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetFps: 60
+  onResume:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1830357771}
+        m_MethodName: onPause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1266073980
 Transform:
   m_ObjectHideFlags: 0
@@ -2229,6 +2243,26 @@ MonoBehaviour:
   cyan: {r: 0, g: 0, b: 0, a: 1}
   obj: {fileID: 616970245}
   animationDuration: 0.5
+--- !u!114 &1266073982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266073978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d768488e1b904744b6a5bc0d05f405e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 6a9a89459c94ac4449c15c9d860e5643, type: 3}
+  - {fileID: 8300000, guid: b65ba47544a8f314a8be65fe70185ef1, type: 3}
+  - {fileID: 8300000, guid: 530f2cc7004496e4d94165983f5e1a4f, type: 3}
+  - {fileID: 8300000, guid: c2adadfddd7061c489bf965cb6ab29f6, type: 3}
+  - {fileID: 8300000, guid: a285b6ba364c3334d833408a912cad66, type: 3}
+  source: {fileID: 1929703549}
+  musicVolume: 0.8
 --- !u!1 &1333617433
 GameObject:
   m_ObjectHideFlags: 0
@@ -2762,6 +2796,7 @@ MonoBehaviour:
   pause: {fileID: 86669983}
   fps: {fileID: 489415524}
   ready: {fileID: 2089357551}
+  source: {fileID: 1929703549}
 --- !u!1 &1853987613
 GameObject:
   m_ObjectHideFlags: 0
@@ -3059,8 +3094,8 @@ MonoBehaviour:
   explosionVolume: 1.2
   hertz: {fileID: 8300000, guid: 6f72144387d47594280be747ddf907e6, type: 3}
   hertzVolume: 1
-  trig: {fileID: 8300000, guid: 2a540ee6897e27248af77b73b3361e2f, type: 3}
-  trigVolume: 1
+  trig: {fileID: 8300000, guid: 2152165cf40fe5a49802646748cd564c, type: 3}
+  trigVolume: 0.65
 --- !u!4 &1929703543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6260732123296363365, guid: f1260279930948e4687e372253672244,

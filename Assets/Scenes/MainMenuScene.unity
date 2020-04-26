@@ -524,6 +524,7 @@ GameObject:
   - component: {fileID: 140962740}
   - component: {fileID: 140962739}
   - component: {fileID: 140962742}
+  - component: {fileID: 140962741}
   m_Layer: 0
   m_Name: GameFlow
   m_TagString: Untagged
@@ -580,6 +581,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &140962741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140962738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83cf0b7e7b8aa9f4ebc18b4e41793dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFps: 60
 --- !u!114 &140962742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2618,7 +2632,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1383286660}
   - component: {fileID: 1383286659}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2682,6 +2696,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: f603a6fa2d677f74798a7f23b73d105d, type: 3}
   - {fileID: 2800000, guid: fcea7c8f51e3eb04aaca4800d5997bb9, type: 3}
   - {fileID: 2800000, guid: 7a3f4b5e3e2dd804e9ec3ad5cdcc1d69, type: 3}
+  - {fileID: 2800000, guid: bb59b8d52b9318740ad1652a478c5f85, type: 3}
   cubeMaterial: {fileID: 2100000, guid: 43b418a1ee9dea145b7c6fef6a4ae127, type: 2}
   xOffset: 2
   leftButton: {fileID: 1971528071}

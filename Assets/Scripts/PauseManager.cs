@@ -7,12 +7,14 @@ using TMPro;
 
 public class PauseManager : MonoBehaviour
 {
+
     public Cube cube;
 	public GameObject canvas;
     public TextMeshProUGUI soundText;
     public RectTransform pause;
     public RectTransform fps;
     public GameObject ready;
+    public AudioSource source;
     bool readyForMainMenu = false;
     bool soundON = true;
 
@@ -64,6 +66,7 @@ public class PauseManager : MonoBehaviour
             ready.SetActive(false);
             Time.timeScale = 0.0f;
             canvas.SetActive(true);
+            source.Pause();
         }
     }
 
@@ -71,5 +74,6 @@ public class PauseManager : MonoBehaviour
     {
     	Time.timeScale = 1.0f;
     	canvas.SetActive(false);
+    	source.UnPause();
     }
 }

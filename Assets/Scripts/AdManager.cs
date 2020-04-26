@@ -40,8 +40,7 @@ public class AdManager : MonoBehaviour
         if(PlayerPrefs.GetInt("ADS", 1) == 0)
         {
             bannerView = null;
-            HideBanner();
-             return;
+            return;
         }
 
         if(bannerView != null)
@@ -65,13 +64,19 @@ public class AdManager : MonoBehaviour
         //MODIFY AD SIZE
 
         AdSize adaptiveSize = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
-        Data.adHeight = bannerView.GetHeightInPixels();
+        
+
 
         this.bannerView = new BannerView(adUnitId, adaptiveSize, AdPosition.Bottom);
 
         this.bannerView.OnAdLoaded += this.HandleOnAdLoaded;
         this.bannerView.OnAdFailedToLoad += this.HandleOnAdFailedToLoad;
 
+
+        if(bannerView != null)
+        {
+            Data.adHeight = bannerView.GetHeightInPixels();
+        }
 
         debugText.text = "WillReq";
         AdRequest request = new AdRequest.Builder().Build();
@@ -94,7 +99,6 @@ public class AdManager : MonoBehaviour
         if(this.bannerView != null)
     	{
            this.bannerView.Hide();
-           RequestBanner();
         }
     }
 

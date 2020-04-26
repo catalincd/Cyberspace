@@ -7,7 +7,7 @@
 {"name":"Immortal","available":false,"collectible":true,"cost":0,"requirements":"Respawn 10 times","textureId":26}
 {"name":"Redemption","available":false,"collectible":true,"cost":0,"requirements":"Repsawn 100 times","textureId":24}
 {"name":"Trigonometric","available":false,"collectible":true,"cost":0,"requirements":"Collect a Trig","textureId":29}
-{"name":"Lightning Fast","available":false,"collectible":true,"cost":0,"requirements":"Collect 10 Trigs","textureId":10}
+{"name":"Lightning Fast","available":false,"collectible":true,"cost":0,"requirements":"Collect 10 Trigs","textureId":30}
 {"name":"HIGHEST IN THE ROOM","available":false,"collectible":true,"cost":0,"requirements":"Collect 100 Trigs","textureId":11}
 {"name":"Lit","available":false,"collectible":true,"cost":0,"requirements":"Collect 100 Bytes","textureId":23}
 {"name":"1 KB","available":false,"collectible":true,"cost":0,"requirements":"Collect 1000 Bytes","textureId":27}
@@ -20,9 +20,10 @@
 {"name":"1000 Bad Times","available":false,"collectible":true,"cost":0,"requirements":"Die 1000 times","textureId":16}
 {"name":"To Infinity and Beyond","available":false,"collectible":true,"cost":0,"requirements":"Reach 1 500 000 Score","textureId":22}
 {"name":"Alpha Tester","available":true,"collectible":true,"cost":0,"requirements":"Awarded to Alpha Testers","textureId":25}
-{"name":"Konvict","available":false,"collectible":false,"cost":200,"requirements":"Awarded to Alpha Testers","textureId":5}
+{"name":"Konvict","available":false,"collectible":false,"cost":200,"requirements":"Awarded to Alpha Testers","textureId":6}
 {"name":"Circles","available":false,"collectible":false,"cost":100,"requirements":"Awarded to Alpha Testers","textureId":9}
 {"name":"C4","available":false,"collectible":false,"cost":50,"requirements":"Awarded to Alpha Testers","textureId":4}
+{"name":"Prime","available":false,"collectible":false,"cost":25,"requirements":"Awarded to Alpha Testers","textureId":1}
 {"name":"Prime","available":false,"collectible":false,"cost":25,"requirements":"Awarded to Alpha Testers","textureId":1}
 {"name":"Prime","available":false,"collectible":false,"cost":25,"requirements":"Awarded to Alpha Testers","textureId":1}
 {"name":"Prime","available":false,"collectible":false,"cost":25,"requirements":"Awarded to Alpha Testers","textureId":1}
